@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "search": "Rechercher des vols",
+    "bookings": "Mes réservations"
+  },
+  "search": {
+    "title": "Où volez-vous ?",
+    "origin": "Départ",
+    "destination": "Destination",
+    "date": "Date de départ",
+    "passengers": "Passagers",
+    "button": "Rechercher des vols"
+  },
+  "flights": {
+    "results": "Vols disponibles",
+    "nonstop": "Direct",
+    "stop": "escale",
+    "stops": "escales",
+    "select": "Choisir",
+    "noResults": "Aucun vol trouvé pour cet itinéraire."
+  },
+  "booking": {
+    "seats": "Choisissez votre siège",
+    "details": "Informations passager",
+    "review": "Récapitulatif",
+    "confirm": "Confirmer la réservation",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Adresse e-mail",
+    "passport": "Numéro de passeport"
+  },
+  "common": {
+    "back": "Retour",
+    "next": "Suivant",
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite."
+  }
+}

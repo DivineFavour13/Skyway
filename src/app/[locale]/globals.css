@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: 'Bricolage Grotesque Variable', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+
+  --color-bg: oklch(0.13 0.008 50);
+  --color-surface: oklch(0.17 0.01 50);
+  --color-surface-raised: oklch(0.21 0.012 50);
+  --color-border: oklch(0.26 0.008 50);
+
+  --color-text-primary: oklch(0.94 0.005 80);
+  --color-text-secondary: oklch(0.62 0.008 70);
+  --color-text-muted: oklch(0.42 0.005 70);
+
+  --color-accent: oklch(0.75 0.15 75);
+  --color-accent-hover: oklch(0.80 0.16 75);
+  --color-accent-dim: oklch(0.75 0.15 75 / 0.12);
+  --color-accent-text: oklch(0.15 0.01 50);
+
+  --color-error: oklch(0.65 0.22 25);
+  --color-success: oklch(0.70 0.18 145);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.4);
+  cursor: pointer;
+}

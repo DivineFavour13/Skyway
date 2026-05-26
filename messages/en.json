@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "search": "Search Flights",
+    "bookings": "My Bookings"
+  },
+  "search": {
+    "title": "Where are you flying?",
+    "origin": "From",
+    "destination": "To",
+    "date": "Departure date",
+    "passengers": "Passengers",
+    "button": "Search flights"
+  },
+  "flights": {
+    "results": "Available flights",
+    "nonstop": "Nonstop",
+    "stop": "stop",
+    "stops": "stops",
+    "select": "Select",
+    "noResults": "No flights found for this route."
+  },
+  "booking": {
+    "seats": "Choose your seat",
+    "details": "Passenger details",
+    "review": "Review booking",
+    "confirm": "Confirm booking",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email address",
+    "passport": "Passport number"
+  },
+  "common": {
+    "back": "Back",
+    "next": "Next",
+    "loading": "Loading...",
+    "error": "Something went wrong."
+  }
+}
