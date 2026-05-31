@@ -6,6 +6,7 @@ export async function GET(req: NextRequest) {
   const origin      = searchParams.get('origin');
   const destination = searchParams.get('destination');
   const date        = searchParams.get('date');
+  const returnDate  = searchParams.get('returnDate');
   const adults      = Number(searchParams.get('adults') ?? '1');
 
   if (!origin || !destination || !date) {
@@ -16,7 +17,13 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const offers = await createOfferRequest(origin, destination, date, adults);
+    const offers = await createOfferRequest(
+      origin,
+      destination,
+      date,
+      adults,
+      returnDate ?? undefined
+    );
     return NextResponse.json({ data: offers });
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';

@@ -41,7 +41,15 @@ export default function HomePage() {
         >
           ✦ Skyway
         </span>
-        <LocaleSwitcher />
+        <div className="flex items-center gap-4">
+          <Link
+            href="/bookings"
+            className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
+          >
+            My Bookings
+          </Link>
+          <LocaleSwitcher />
+        </div>
       </nav>
 
       {/* Hero */}

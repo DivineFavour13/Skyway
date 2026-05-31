@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { AirportInput } from './AirportInput';
 import { Button } from '@/components/ui/Button';
 import { useBookingStore } from '@/store/bookingStore';
+import { cn } from '@/lib/utils';
 import type { Airport } from '@/lib/airports';
 
 export function SearchForm() {
@@ -14,9 +15,11 @@ export function SearchForm() {
   const router = useRouter();
   const { search, setSearch } = useBookingStore();
 
+  const [tripType, setTripType] = useState<'oneway' | 'roundtrip'>(search.tripType);
   const [origin, setOrigin] = useState<Airport | null>(search.origin);
   const [destination, setDestination] = useState<Airport | null>(search.destination);
   const [date, setDate] = useState(search.date);
+  const [returnDate, setReturnDate] = useState(search.returnDate);
   const [adults, setAdults] = useState(search.adults);
   const [error, setError] = useState('');
 
@@ -32,11 +35,27 @@ export function SearchForm() {
       setError('Origin and destination cannot be the same.');
       return;
     }
+    if (tripType === 'roundtrip' && !returnDate) {
+      setError('Please select a return date.');
+      return;
+    }
+    if (tripType === 'roundtrip' && returnDate <= date) {
+      setError('Return date must be after departure date.');
+      return;
+    }
     setError('');
-    setSearch({ origin, destination, date, adults });
-    router.push(
-      `/${locale}/search?origin=${origin.iata_code}&destination=${destination.iata_code}&date=${date}&adults=${adults}`
-    );
+    setSearch({ origin, destination, date, returnDate, tripType, adults });
+
+    const params = new URLSearchParams({
+      origin: origin.iata_code,
+      destination: destination.iata_code,
+      date,
+      adults: String(adults),
+      tripType,
+      ...(tripType === 'roundtrip' && returnDate ? { returnDate } : {}),
+    });
+
+    router.push(`/${locale}/search?${params.toString()}`);
   }
 
   function swapAirports() {
@@ -47,7 +66,26 @@ export function SearchForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Row 1: origin + swap + destination */}
+      {/* Trip type toggle */}
+      <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
+        {(['oneway', 'roundtrip'] as const).map((type) => (
+          <button
+            key={type}
+            type="button"
+            onClick={() => setTripType(type)}
+            className={cn(
+              'px-4 py-1.5 rounded-lg text-sm font-medium transition-all',
+              tripType === type
+                ? 'bg-[var(--color-accent)] text-[var(--color-accent-text)]'
+                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+            )}
+          >
+            {type === 'oneway' ? 'One way' : 'Round trip'}
+          </button>
+        ))}
+      </div>
+
+      {/* Airport row */}
       <div className="flex flex-col sm:flex-row gap-3 items-end">
         <AirportInput
           id="origin"
@@ -56,16 +94,14 @@ export function SearchForm() {
           value={origin}
           onChange={setOrigin}
         />
-
         <button
           type="button"
           onClick={swapAirports}
           aria-label="Swap origin and destination"
-          className="shrink-0 h-[46px] w-[46px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors flex items-center justify-center text-lg mb-0 sm:mb-0"
+          className="shrink-0 h-[46px] w-[46px] rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors flex items-center justify-center text-lg"
         >
           ⇄
         </button>
-
         <AirportInput
           id="destination"
           label={t('destination')}
@@ -75,7 +111,7 @@ export function SearchForm() {
         />
       </div>
 
-      {/* Row 2: date + passengers + submit */}
+      {/* Date row */}
       <div className="flex flex-col sm:flex-row gap-3 items-end">
         <div className="flex-1">
           <label
@@ -94,6 +130,25 @@ export function SearchForm() {
           />
         </div>
 
+        {tripType === 'roundtrip' && (
+          <div className="flex-1">
+            <label
+              htmlFor="returnDate"
+              className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide"
+            >
+              Return date
+            </label>
+            <input
+              id="returnDate"
+              type="date"
+              min={date || today}
+              value={returnDate}
+              onChange={(e) => setReturnDate(e.target.value)}
+              className="w-full h-[46px] px-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)] transition-colors"
+            />
+          </div>
+        )}
+
         <div className="w-full sm:w-36">
           <label
             htmlFor="adults-display"
@@ -109,7 +164,6 @@ export function SearchForm() {
               type="button"
               onClick={() => setAdults((a) => Math.max(1, a - 1))}
               className="h-full w-10 flex items-center justify-center text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-              aria-label="Remove passenger"
             >
               −
             </button>
@@ -120,7 +174,6 @@ export function SearchForm() {
               type="button"
               onClick={() => setAdults((a) => Math.min(9, a + 1))}
               className="h-full w-10 flex items-center justify-center text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-              aria-label="Add passenger"
             >
               +
             </button>

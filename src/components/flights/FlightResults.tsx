@@ -1,5 +1,5 @@
 import { createOfferRequest } from '@/services/duffel';
-import { FlightCard } from './FlightCard';
+import { FlightResultsClient } from './FlightResultsClient';
 
 type Props = {
   origin: string;
@@ -36,19 +36,5 @@ export async function FlightResults({ origin, destination, date, adults, locale 
     );
   }
 
-  // Sort by price ascending
-  const sorted = [...offers].sort(
-    (a, b) => Number(a.total_amount) - Number(b.total_amount)
-  );
-
-  return (
-    <div className="space-y-3">
-      <p className="text-sm text-[var(--color-text-muted)] mb-6">
-        {sorted.length} flight{sorted.length !== 1 ? 's' : ''} found
-      </p>
-      {sorted.map((offer) => (
-        <FlightCard key={offer.id} offer={offer} locale={locale} />
-      ))}
-    </div>
-  );
+  return <FlightResultsClient offers={offers} locale={locale} />;
 }

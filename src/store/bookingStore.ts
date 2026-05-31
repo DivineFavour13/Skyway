@@ -14,6 +14,8 @@ export type SearchCriteria = {
   origin: Airport | null;
   destination: Airport | null;
   date: string;
+  returnDate: string;
+  tripType: 'oneway' | 'roundtrip';
   adults: number;
 };
 
@@ -35,6 +37,8 @@ const initialSearch: SearchCriteria = {
   origin: null,
   destination: null,
   date: '',
+  returnDate: '',
+  tripType: 'oneway',
   adults: 1,
 };
 

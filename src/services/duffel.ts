@@ -41,21 +41,27 @@ export async function createOfferRequest(
   origin: string,
   destination: string,
   date: string,
-  adults: number
+  adults: number,
+  returnDate?: string
 ) {
-  const data = await duffelFetch<{ data: { id: string; offers: import('@/types/duffel').DuffelOffer[] } }>(
-    '/air/offer_requests?return_offers=true',
-    {
-      method: 'POST',
-      body: JSON.stringify({
-        data: {
-          slices: [{ origin, destination, departure_date: date }],
-          passengers: Array.from({ length: adults }, () => ({ type: 'adult' })),
-          cabin_class: 'economy',
-        },
-      }),
-    }
-  );
+  const slices = [
+    { origin, destination, departure_date: date },
+    ...(returnDate ? [{ origin: destination, destination: origin, departure_date: returnDate }] : []),
+  ];
+
+  const data = await duffelFetch<{
+    data: { id: string; offers: import('@/types/duffel').DuffelOffer[] };
+  }>('/air/offer_requests?return_offers=true', {
+    method: 'POST',
+    body: JSON.stringify({
+      data: {
+        slices,
+        passengers: Array.from({ length: adults }, () => ({ type: 'adult' })),
+        cabin_class: 'economy',
+      },
+    }),
+  });
+
   return data.data.offers;
 }
 
