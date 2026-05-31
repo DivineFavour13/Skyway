@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { FlightFilters, type FilterState } from './FlightFilters';
 import { FlightCard } from './FlightCard';
+import { EmptyState } from '@/components/ui/EmptyState';
 import type { DuffelOffer } from '@/types/duffel';
 
 type Props = {
@@ -25,19 +26,15 @@ export function FlightResultsClient({ offers, locale }: Props) {
       return true;
     })
     .sort((a, b) => {
-      if (filters.sortBy === 'price') {
+      if (filters.sortBy === 'price')
         return Number(a.total_amount) - Number(b.total_amount);
-      }
-      if (filters.sortBy === 'duration') {
-        const durA = a.slices[0]?.duration ?? '';
-        const durB = b.slices[0]?.duration ?? '';
-        return durA.localeCompare(durB);
-      }
-      if (filters.sortBy === 'stops') {
-        const stopsA = (a.slices[0]?.segments.length ?? 1) - 1;
-        const stopsB = (b.slices[0]?.segments.length ?? 1) - 1;
-        return stopsA - stopsB;
-      }
+      if (filters.sortBy === 'duration')
+        return (a.slices[0]?.duration ?? '').localeCompare(b.slices[0]?.duration ?? '');
+      if (filters.sortBy === 'stops')
+        return (
+          (a.slices[0]?.segments.length ?? 1) - 1 -
+          ((b.slices[0]?.segments.length ?? 1) - 1)
+        );
       return 0;
     });
 
@@ -50,11 +47,10 @@ export function FlightResultsClient({ offers, locale }: Props) {
       />
 
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-8 text-center">
-          <p className="text-[var(--color-text-muted)] text-sm">
-            No flights match your filters. Try adjusting them.
-          </p>
-        </div>
+        <EmptyState
+          type="filtered"
+          message="No flights match your filters. Try adjusting the stops or sort options."
+        />
       ) : (
         <div className="space-y-3">
           {filtered.map((offer) => (

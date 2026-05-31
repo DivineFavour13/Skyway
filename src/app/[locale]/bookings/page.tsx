@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
 import { Link } from '@/navigation';
+import { Navbar } from '@/components/layout/Navbar';
+import { EmptyState } from '@/components/ui/EmptyState';
 import { formatPrice, formatDateTime, formatDuration } from '@/lib/utils';
 import type { DuffelOffer } from '@/types/duffel';
 
@@ -21,8 +21,6 @@ type SavedBooking = {
 };
 
 export default function BookingsPage() {
-  const locale = useLocale();
-  const router = useRouter();
   const [bookings, setBookings] = useState<SavedBooking[]>([]);
 
   useEffect(() => {
@@ -32,17 +30,7 @@ export default function BookingsPage() {
 
   return (
     <div className="min-h-screen">
-      <nav className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
-        <Link
-          href="/"
-          className="text-xl font-bold tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          ✦ Skyway
-        </Link>
-        <span className="text-sm text-[var(--color-text-muted)]">My Bookings</span>
-        <div className="w-20" />
-      </nav>
+      <Navbar />
 
       <main className="max-w-3xl mx-auto px-4 py-10">
         <h1
@@ -53,16 +41,18 @@ export default function BookingsPage() {
         </h1>
 
         {bookings.length === 0 ? (
-          <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-12 text-center space-y-4">
-            <p className="text-4xl">✈️</p>
-            <p className="text-[var(--color-text-secondary)]">No bookings yet.</p>
-            <Link
-              href="/"
-              className="inline-block text-sm text-[var(--color-accent)] hover:underline"
-            >
-              Search for flights →
-            </Link>
-          </div>
+          <EmptyState
+            type="bookings"
+            message="You haven't booked any flights yet."
+            action={
+              <Link
+                href="/"
+                className="text-sm text-[var(--color-accent)] hover:underline"
+              >
+                Search for flights →
+              </Link>
+            }
+          />
         ) : (
           <div className="space-y-4">
             {bookings.map((booking) => {
@@ -88,7 +78,7 @@ export default function BookingsPage() {
                       </p>
                       <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
                         Booked {new Date(booking.bookedAt).toLocaleDateString('en-US', {
-                          month: 'short', day: 'numeric', year: 'numeric'
+                          month: 'short', day: 'numeric', year: 'numeric',
                         })}
                       </p>
                     </div>
