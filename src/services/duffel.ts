@@ -42,11 +42,14 @@ export async function createOfferRequest(
   destination: string,
   date: string,
   adults: number,
-  returnDate?: string
+  returnDate?: string,
+  cabinClass: string = 'economy'
 ) {
   const slices = [
     { origin, destination, departure_date: date },
-    ...(returnDate ? [{ origin: destination, destination: origin, departure_date: returnDate }] : []),
+    ...(returnDate
+      ? [{ origin: destination, destination: origin, departure_date: returnDate }]
+      : []),
   ];
 
   const data = await duffelFetch<{
@@ -57,7 +60,7 @@ export async function createOfferRequest(
       data: {
         slices,
         passengers: Array.from({ length: adults }, () => ({ type: 'adult' })),
-        cabin_class: 'economy',
+        cabin_class: cabinClass,
       },
     }),
   });
