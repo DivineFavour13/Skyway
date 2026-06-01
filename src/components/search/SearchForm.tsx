@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { AirportInput } from './AirportInput';
 import { Button } from '@/components/ui/Button';
+import { DatePicker } from '@/components/ui/DatePicker';
 import { useBookingStore } from '@/store/bookingStore';
 import { cn } from '@/lib/utils';
 import type { Airport } from '@/lib/airports';
@@ -73,7 +74,6 @@ export function SearchForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Row 1: trip type + cabin class */}
       <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
-        {/* Trip type */}
         <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
           {(['oneway', 'roundtrip'] as const).map((type) => (
             <button
@@ -92,7 +92,6 @@ export function SearchForm() {
           ))}
         </div>
 
-        {/* Cabin class */}
         <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
           {(
             [
@@ -147,40 +146,22 @@ export function SearchForm() {
 
       {/* Date row */}
       <div className="flex flex-col sm:flex-row gap-3 items-end">
-        <div className="flex-1">
-          <label
-            htmlFor="date"
-            className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide"
-          >
-            {t('date')}
-          </label>
-          <input
-            id="date"
-            type="date"
-            min={today}
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="w-full h-[46px] px-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)] transition-colors"
-          />
-        </div>
+        <DatePicker
+          id="date"
+          label={t('date')}
+          value={date}
+          onChange={setDate}
+          min={today}
+        />
 
         {tripType === 'roundtrip' && (
-          <div className="flex-1">
-            <label
-              htmlFor="returnDate"
-              className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide"
-            >
-              Return date
-            </label>
-            <input
-              id="returnDate"
-              type="date"
-              min={date || today}
-              value={returnDate}
-              onChange={(e) => setReturnDate(e.target.value)}
-              className="w-full h-[46px] px-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)] transition-colors"
-            />
-          </div>
+          <DatePicker
+            id="returnDate"
+            label="Return date"
+            value={returnDate}
+            onChange={setReturnDate}
+            min={date || today}
+          />
         )}
 
         <div className="w-full sm:w-36">

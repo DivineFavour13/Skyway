@@ -25,19 +25,27 @@ export function CurrencySelector() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          'flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors',
-          'border border-[var(--color-border)] bg-[var(--color-surface)]',
-          'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]',
-          'hover:border-[var(--color-accent)]'
+          'flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold transition-colors',
+          'border bg-[var(--color-surface)]',
+          open
+            ? 'border-[var(--color-accent)] text-[var(--color-accent)]'
+            : 'border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]'
         )}
       >
-        <span>{selected.symbol}</span>
+        <span className="text-base">{selected.symbol}</span>
         <span>{selected.code}</span>
-        <span className="text-[10px] opacity-60">{open ? '▲' : '▼'}</span>
+        <span className="text-[10px] opacity-50">{open ? '▲' : '▼'}</span>
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full mt-1 w-44 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] shadow-xl z-50 overflow-hidden">
+        <div className="absolute right-0 top-full mt-2 w-52 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] shadow-2xl z-50 overflow-hidden">
+          {/* Header */}
+          <div className="px-4 py-3 border-b border-[var(--color-border)]">
+            <p className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">
+              Select currency
+            </p>
+          </div>
+
           {CURRENCIES.map((c) => (
             <button
               key={c.code}
@@ -47,14 +55,17 @@ export function CurrencySelector() {
                 setOpen(false);
               }}
               className={cn(
-                'w-full flex items-center justify-between px-4 py-2.5 text-xs transition-colors',
+                'w-full flex items-center justify-between px-4 py-3 text-sm transition-colors',
                 c.code === selected.code
                   ? 'bg-[var(--color-accent-dim)] text-[var(--color-accent)]'
                   : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text-primary)]'
               )}
             >
-              <span className="font-semibold">{c.code}</span>
-              <span className="text-[var(--color-text-muted)]">{c.symbol} {c.label}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-base w-6 text-center">{c.symbol}</span>
+                <span className="font-semibold">{c.code}</span>
+              </div>
+              <span className="text-xs text-[var(--color-text-muted)]">{c.label}</span>
             </button>
           ))}
         </div>
