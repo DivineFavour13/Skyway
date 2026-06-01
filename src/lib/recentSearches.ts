@@ -1,4 +1,5 @@
 import type { Airport } from './airports';
+import type { CabinClass } from '@/store/bookingStore';
 
 export type RecentSearch = {
   origin: Airport;
@@ -7,6 +8,7 @@ export type RecentSearch = {
   adults: number;
   tripType: 'oneway' | 'roundtrip';
   returnDate?: string;
+  cabinClass: CabinClass;
   searchedAt: string;
 };
 
@@ -16,7 +18,6 @@ const MAX = 3;
 export function saveRecentSearch(search: Omit<RecentSearch, 'searchedAt'>) {
   const existing = getRecentSearches();
 
-  // Remove duplicate if same route already exists
   const filtered = existing.filter(
     (s) =>
       !(
