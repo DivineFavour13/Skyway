@@ -56,7 +56,6 @@ export function DatePicker({ id, label, value, onChange, min }: Props) {
   }
 
   function getFirstDayOfMonth(year: number, month: number) {
-    // Monday = 0
     const day = new Date(year, month, 1).getDay();
     return day === 0 ? 6 : day - 1;
   }
@@ -115,7 +114,14 @@ export function DatePicker({ id, label, value, onChange, min }: Props) {
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-1 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] shadow-2xl p-4 w-72">
+        <div
+          className="absolute z-50 mt-1 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] shadow-2xl p-4"
+          style={{
+            width: '288px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}
+        >
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <button
@@ -150,8 +156,7 @@ export function DatePicker({ id, label, value, onChange, min }: Props) {
           </div>
 
           {/* Days grid */}
-          <div className="grid grid-cols-7 gap-y-1">
-            {/* Empty cells for offset */}
+          <div className="grid grid-cols-7 gap-y-0.5">
             {Array.from({ length: firstDay }).map((_, i) => (
               <div key={`empty-${i}`} />
             ))}
@@ -178,7 +183,7 @@ export function DatePicker({ id, label, value, onChange, min }: Props) {
                   disabled={isDisabled}
                   onClick={() => handleSelect(day)}
                   className={cn(
-                    'h-8 w-8 mx-auto rounded-lg text-xs font-medium transition-all flex items-center justify-center',
+                    'h-7 w-7 mx-auto rounded-lg text-xs font-medium transition-all flex items-center justify-center',
                     isSelected &&
                       'bg-[var(--color-accent)] text-[var(--color-accent-text)] font-bold',
                     !isSelected &&
