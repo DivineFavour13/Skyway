@@ -99,6 +99,13 @@ export function Navbar({ showBack, onBack, center }: Props) {
           >
             My Bookings
           </Link>
+          {/* Currency selector in mobile menu */}
+            <div className="py-1">
+            <p className="text-xs text-[var(--color-text-muted)] mb-2 uppercase tracking-wide">
+                Currency
+            </p>
+            <CurrencySelector />
+            </div>
           <div className="flex gap-2 pt-1 border-t border-[var(--color-border)]">
             {routing.locales.map((l) => (
               <Link
