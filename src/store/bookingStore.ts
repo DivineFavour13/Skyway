@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware';
 import type { DuffelOffer } from '@/types/duffel';
 import type { Airport } from '@/lib/airports';
 
+export type CabinClass = 'economy' | 'premium_economy' | 'business' | 'first';
+
 export type PassengerDetails = {
   firstName: string;
   lastName: string;
@@ -17,6 +19,7 @@ export type SearchCriteria = {
   returnDate: string;
   tripType: 'oneway' | 'roundtrip';
   adults: number;
+  cabinClass: CabinClass;
 };
 
 export type BookingStore = {
@@ -40,6 +43,7 @@ const initialSearch: SearchCriteria = {
   returnDate: '',
   tripType: 'oneway',
   adults: 1,
+  cabinClass: 'economy',
 };
 
 export const useBookingStore = create<BookingStore>()(

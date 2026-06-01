@@ -5,10 +5,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPrice(amount: string, currency: string): string {
+export function formatPrice(amount: string, fromCurrency: string): string {
+  // Dynamic import avoided — components should call convertAndFormat directly
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency,
+    currency: fromCurrency,
   }).format(Number(amount));
 }
 

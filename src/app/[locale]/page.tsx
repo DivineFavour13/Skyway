@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { SearchForm } from '@/components/search/SearchForm';
 import { Navbar } from '@/components/layout/Navbar';
+import { RecentSearches } from '@/components/search/RecentSearches';
 
 const POPULAR_ROUTES = [
   { from: 'LOS', fromCity: 'Lagos', to: 'LHR', toCity: 'London' },
@@ -48,6 +49,7 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+          <RecentSearches />
         </div>
       </main>
     </div>

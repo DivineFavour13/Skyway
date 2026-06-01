@@ -18,6 +18,7 @@ export function AirportInput({ label, placeholder, value, onChange, id }: Props)
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isFocused, setIsFocused] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,6 +38,7 @@ export function AirportInput({ label, placeholder, value, onChange, id }: Props)
     (airport: Airport) => {
       onChange(airport);
       setQuery('');
+      setIsEditing(false);
       setIsOpen(false);
       setResults([]);
     },
@@ -57,6 +59,7 @@ export function AirportInput({ label, placeholder, value, onChange, id }: Props)
       if (selected) handleSelect(selected);
     } else if (e.key === 'Escape') {
       setIsOpen(false);
+      setIsEditing(false);
     }
   };
 
@@ -65,13 +68,15 @@ export function AirportInput({ label, placeholder, value, onChange, id }: Props)
       if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setIsOpen(false);
         setIsFocused(false);
+        setIsEditing(false);
+        setQuery('');
       }
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const showSelected = value && !query;
+  const showSelected = value && !isEditing;
 
   return (
     <div ref={containerRef} className="relative flex-1 min-w-0">
@@ -94,6 +99,7 @@ export function AirportInput({ label, placeholder, value, onChange, id }: Props)
           <button
             type="button"
             onClick={() => {
+              setIsEditing(true);
               setQuery('');
               setTimeout(() => inputRef.current?.focus(), 0);
             }}

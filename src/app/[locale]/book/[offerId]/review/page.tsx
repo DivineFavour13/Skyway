@@ -4,7 +4,9 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useBookingStore } from '@/store/bookingStore';
 import { Button } from '@/components/ui/Button';
-import { formatPrice, formatDuration, formatDateTime } from '@/lib/utils';
+import { formatDuration, formatDateTime } from '@/lib/utils';
+import { useFormattedPrice } from '@/hooks/useFormattedPrice';
+import { generateBoardingPass } from '@/lib/boardingPass';
 
 function generateRef() {
   return 'SKY-' + Math.random().toString(36).slice(2, 8).toUpperCase();
@@ -25,6 +27,11 @@ export default function ReviewPage() {
   const [confirmed, setConfirmed] = useState(!!bookingReference);
   const [loading, setLoading] = useState(false);
 
+  const formattedTotal = useFormattedPrice(
+    selectedOffer?.total_amount ?? '0',
+    selectedOffer?.total_currency ?? 'USD'
+  );
+
   useEffect(() => {
     if (!selectedOffer || !passenger) router.replace(`/${locale}`);
   }, [selectedOffer, passenger, router, locale]);
@@ -41,8 +48,9 @@ export default function ReviewPage() {
       const ref = generateRef();
       setBookingReference(ref);
 
-      // Save to localStorage
-      const bookings = JSON.parse(localStorage.getItem('skyway-bookings') ?? '[]') as unknown[];
+      const bookings = JSON.parse(
+        localStorage.getItem('skyway-bookings') ?? '[]'
+      ) as unknown[];
       bookings.push({
         ref,
         offer: selectedOffer,
@@ -61,19 +69,15 @@ export default function ReviewPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="max-w-md w-full text-center space-y-6">
-          <div
-            className="text-5xl"
-            role="img"
-            aria-label="Checkmark"
-          >
-            ✅
-          </div>
+          <div className="text-5xl" role="img" aria-label="Checkmark">✅</div>
+
           <h1
             className="text-3xl font-bold text-[var(--color-text-primary)]"
             style={{ fontFamily: 'var(--font-display)' }}
           >
             Booking confirmed
           </h1>
+
           <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 space-y-2">
             <p className="text-sm text-[var(--color-text-muted)]">Booking reference</p>
             <p className="text-2xl font-mono font-bold text-[var(--color-accent)]">
@@ -83,7 +87,17 @@ export default function ReviewPage() {
               {passenger.firstName} {passenger.lastName} · {passenger.email}
             </p>
           </div>
-          <div className="pt-2 space-y-3">
+
+          <div className="space-y-3 pt-2">
+            <Button
+              size="lg"
+              className="w-full"
+              onClick={() =>
+                generateBoardingPass(selectedOffer, passenger, bookingReference)
+              }
+            >
+              ↓ Download boarding pass
+            </Button>
             <Button
               variant="outline"
               className="w-full"
@@ -95,6 +109,10 @@ export default function ReviewPage() {
               Book another flight
             </Button>
           </div>
+
+          <p className="text-xs text-[var(--color-text-muted)]">
+            A PDF boarding pass will download to your device.
+          </p>
         </div>
       </div>
     );
@@ -129,7 +147,6 @@ export default function ReviewPage() {
         </h1>
 
         <div className="space-y-4">
-          {/* Flight summary */}
           <Section title="Flight">
             {slice && firstSeg && lastSeg && (
               <div className="space-y-3">
@@ -139,7 +156,8 @@ export default function ReviewPage() {
                       {formatDateTime(firstSeg.departing_at).time}
                     </p>
                     <p className="text-xs text-[var(--color-text-muted)]">
-                      {firstSeg.origin.iata_code} · {formatDateTime(firstSeg.departing_at).date}
+                      {firstSeg.origin.iata_code} ·{' '}
+                      {formatDateTime(firstSeg.departing_at).date}
                     </p>
                   </div>
                   <div className="text-center text-xs text-[var(--color-text-muted)]">
@@ -156,7 +174,8 @@ export default function ReviewPage() {
                       {formatDateTime(lastSeg.arriving_at).time}
                     </p>
                     <p className="text-xs text-[var(--color-text-muted)]">
-                      {lastSeg.destination.iata_code} · {formatDateTime(lastSeg.arriving_at).date}
+                      {lastSeg.destination.iata_code} ·{' '}
+                      {formatDateTime(lastSeg.arriving_at).date}
                     </p>
                   </div>
                 </div>
@@ -167,14 +186,12 @@ export default function ReviewPage() {
             )}
           </Section>
 
-          {/* Passenger */}
           <Section title="Passenger">
             <Row label="Name" value={`${passenger.firstName} ${passenger.lastName}`} />
             <Row label="Email" value={passenger.email} />
             <Row label="Passport" value={passenger.passport} />
           </Section>
 
-          {/* Seats */}
           {selectedSeatIds.length > 0 && (
             <Section title="Seats">
               <p className="text-sm text-[var(--color-text-secondary)]">
@@ -183,12 +200,11 @@ export default function ReviewPage() {
             </Section>
           )}
 
-          {/* Price */}
           <Section title="Total">
             <div className="flex items-center justify-between">
               <p className="text-sm text-[var(--color-text-secondary)]">Flight total</p>
               <p className="text-xl font-bold text-[var(--color-text-primary)]">
-                {formatPrice(selectedOffer.total_amount, selectedOffer.total_currency)}
+                {formattedTotal}
               </p>
             </div>
             <p className="text-xs text-[var(--color-text-muted)] mt-1">

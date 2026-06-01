@@ -3,7 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { useBookingStore } from '@/store/bookingStore';
 import { Button } from '@/components/ui/Button';
-import { formatPrice, formatDuration, formatDateTime } from '@/lib/utils';
+import { formatDuration, formatDateTime } from '@/lib/utils';
+import { useFormattedPrice } from '@/hooks/useFormattedPrice';
 import type { DuffelOffer } from '@/types/duffel';
 
 type Props = {
@@ -14,6 +15,7 @@ type Props = {
 export function FlightCard({ offer, locale }: Props) {
   const router = useRouter();
   const setSelectedOffer = useBookingStore((s) => s.setSelectedOffer);
+  const formattedPrice = useFormattedPrice(offer.total_amount, offer.total_currency);
 
   const slice = offer.slices[0];
   if (!slice) return null;
@@ -57,7 +59,6 @@ export function FlightCard({ offer, locale }: Props) {
 
         {/* Flight timeline */}
         <div className="flex-1 flex items-center gap-3">
-          {/* Departure */}
           <div className="text-center">
             <p className="text-lg font-bold text-[var(--color-text-primary)] tabular-nums">
               {departure.time}
@@ -67,7 +68,6 @@ export function FlightCard({ offer, locale }: Props) {
             </p>
           </div>
 
-          {/* Duration line */}
           <div className="flex-1 flex flex-col items-center gap-1 min-w-0">
             <p className="text-xs text-[var(--color-text-muted)]">{duration}</p>
             <div className="w-full flex items-center gap-1">
@@ -79,7 +79,6 @@ export function FlightCard({ offer, locale }: Props) {
             </p>
           </div>
 
-          {/* Arrival */}
           <div className="text-center">
             <p className="text-lg font-bold text-[var(--color-text-primary)] tabular-nums">
               {arrival.time}
@@ -94,7 +93,7 @@ export function FlightCard({ offer, locale }: Props) {
         <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-3 sm:gap-1 sm:w-32 shrink-0">
           <div className="text-right">
             <p className="text-xl font-bold text-[var(--color-text-primary)]">
-              {formatPrice(offer.total_amount, offer.total_currency)}
+              {formattedPrice}
             </p>
             <p className="text-xs text-[var(--color-text-muted)]">per person</p>
           </div>

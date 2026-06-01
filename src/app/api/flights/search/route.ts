@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
   const date        = searchParams.get('date');
   const returnDate  = searchParams.get('returnDate');
   const adults      = Number(searchParams.get('adults') ?? '1');
+  const cabinClass  = searchParams.get('cabinClass') ?? 'economy';
 
   if (!origin || !destination || !date) {
     return NextResponse.json(
@@ -22,7 +23,8 @@ export async function GET(req: NextRequest) {
       destination,
       date,
       adults,
-      returnDate ?? undefined
+      returnDate ?? undefined,
+      cabinClass
     );
     return NextResponse.json({ data: offers });
   } catch (err) {

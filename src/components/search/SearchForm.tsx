@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { useBookingStore } from '@/store/bookingStore';
 import { cn } from '@/lib/utils';
 import type { Airport } from '@/lib/airports';
+import type { CabinClass } from '@/store/bookingStore';
+import { saveRecentSearch } from '@/lib/recentSearches';
 
 export function SearchForm() {
   const t = useTranslations('search');
@@ -16,6 +18,7 @@ export function SearchForm() {
   const { search, setSearch } = useBookingStore();
 
   const [tripType, setTripType] = useState<'oneway' | 'roundtrip'>(search.tripType);
+  const [cabinClass, setCabinClass] = useState<CabinClass>(search.cabinClass);
   const [origin, setOrigin] = useState<Airport | null>(search.origin);
   const [destination, setDestination] = useState<Airport | null>(search.destination);
   const [date, setDate] = useState(search.date);
@@ -44,7 +47,7 @@ export function SearchForm() {
       return;
     }
     setError('');
-    setSearch({ origin, destination, date, returnDate, tripType, adults });
+    setSearch({ origin, destination, date, returnDate, tripType, adults, cabinClass });
 
     const params = new URLSearchParams({
       origin: origin.iata_code,
@@ -52,9 +55,11 @@ export function SearchForm() {
       date,
       adults: String(adults),
       tripType,
+      cabinClass,
       ...(tripType === 'roundtrip' && returnDate ? { returnDate } : {}),
     });
 
+    saveRecentSearch({ origin, destination, date, returnDate, tripType, adults, cabinClass });
     router.push(`/${locale}/search?${params.toString()}`);
   }
 
@@ -66,23 +71,52 @@ export function SearchForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Trip type toggle */}
-      <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
-        {(['oneway', 'roundtrip'] as const).map((type) => (
-          <button
-            key={type}
-            type="button"
-            onClick={() => setTripType(type)}
-            className={cn(
-              'px-4 py-1.5 rounded-lg text-sm font-medium transition-all',
-              tripType === type
-                ? 'bg-[var(--color-accent)] text-[var(--color-accent-text)]'
-                : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
-            )}
-          >
-            {type === 'oneway' ? 'One way' : 'Round trip'}
-          </button>
-        ))}
+      {/* Row 1: trip type + cabin class */}
+      <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
+        {/* Trip type */}
+        <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
+          {(['oneway', 'roundtrip'] as const).map((type) => (
+            <button
+              key={type}
+              type="button"
+              onClick={() => setTripType(type)}
+              className={cn(
+                'px-4 py-1.5 rounded-lg text-sm font-medium transition-all',
+                tripType === type
+                  ? 'bg-[var(--color-accent)] text-[var(--color-accent-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              )}
+            >
+              {type === 'oneway' ? 'One way' : 'Round trip'}
+            </button>
+          ))}
+        </div>
+
+        {/* Cabin class */}
+        <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
+          {(
+            [
+              { value: 'economy',         label: 'Economy' },
+              { value: 'premium_economy', label: 'Premium' },
+              { value: 'business',        label: 'Business' },
+              { value: 'first',           label: 'First' },
+            ] as { value: CabinClass; label: string }[]
+          ).map(({ value, label }) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => setCabinClass(value)}
+              className={cn(
+                'px-3 py-1.5 rounded-lg text-xs font-medium transition-all',
+                cabinClass === value
+                  ? 'bg-[var(--color-accent)] text-[var(--color-accent-text)]'
+                  : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
+              )}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Airport row */}

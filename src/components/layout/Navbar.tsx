@@ -5,6 +5,8 @@ import { useLocale } from 'next-intl';
 import { Link } from '@/navigation';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
+import { IncompleteBanner } from '@/components/booking/IncompleteBanner';
+import { CurrencySelector } from '@/components/ui/CurrencySelector';
 
 type Props = {
   showBack?: boolean;
@@ -55,6 +57,7 @@ export function Navbar({ showBack, onBack, center }: Props) {
           >
             My Bookings
           </Link>
+          <CurrencySelector />
           <div className="flex gap-1">
             {routing.locales.map((l) => (
               <Link
@@ -116,6 +119,8 @@ export function Navbar({ showBack, onBack, center }: Props) {
           </div>
         </div>
       )}
+
+      <IncompleteBanner />
     </>
   );
 }
