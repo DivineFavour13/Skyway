@@ -115,7 +115,7 @@ export function DatePicker({ id, label, value, onChange, min }: Props) {
       </button>
 
       {open && (
-        <div className="absolute z-50 mt-1 left-0 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] shadow-2xl p-4 w-72">
+        <div className="absolute z-50 mt-1 left-1/2 -translate-x-1/2 sm:left-0 sm:translate-x-0 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-raised)] shadow-2xl p-4 w-72">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <button
