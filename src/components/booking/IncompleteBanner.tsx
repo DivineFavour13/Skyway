@@ -2,18 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useBookingStore } from '@/store/bookingStore';
 import { formatPrice } from '@/lib/utils';
 
 export function IncompleteBanner() {
   const locale = useLocale();
   const router = useRouter();
-  const { selectedOffer, search, reset } = useBookingStore();
+  const t = useTranslations('incomplete');
+  const { selectedOffer, reset } = useBookingStore();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Only show if there's a selected offer but no completed booking
     const bookingRef = useBookingStore.getState().bookingReference;
     if (selectedOffer && !bookingRef) {
       setVisible(true);
@@ -46,12 +46,7 @@ export function IncompleteBanner() {
         <div className="flex items-center gap-3">
           <div className="h-2 w-2 rounded-full bg-[var(--color-accent)] animate-pulse shrink-0" />
           <p className="text-sm text-[var(--color-text-primary)]">
-            You have an incomplete booking —{' '}
-            <span className="font-semibold">
-              {origin} → {destination}
-            </span>
-            {' '}for{' '}
-            <span className="font-semibold">{price}</span>
+            {t('message', { origin, destination, price })}
           </p>
         </div>
         <div className="flex items-center gap-3 shrink-0">
@@ -59,13 +54,13 @@ export function IncompleteBanner() {
             onClick={handleDiscard}
             className="text-xs text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors"
           >
-            Discard
+            {t('discard')}
           </button>
           <button
             onClick={handleContinue}
             className="px-4 py-1.5 rounded-lg bg-[var(--color-accent)] text-[var(--color-accent-text)] text-xs font-semibold hover:bg-[var(--color-accent-hover)] transition-colors"
           >
-            Continue booking →
+            {t('continue')}
           </button>
         </div>
       </div>

@@ -1,38 +1,146 @@
 {
   "nav": {
     "search": "Search Flights",
-    "bookings": "My Bookings"
+    "bookings": "My Bookings",
+    "currency": "Currency"
   },
   "search": {
     "title": "Where are you flying?",
+    "flightSearch": "Flight Search",
     "origin": "From",
     "destination": "To",
     "date": "Departure date",
+    "returnDate": "Return date",
     "passengers": "Passengers",
-    "button": "Search flights"
+    "button": "Search flights",
+    "oneWay": "One way",
+    "roundTrip": "Round trip",
+    "economy": "Economy",
+    "premium": "Premium",
+    "business": "Business",
+    "first": "First",
+    "popularRoutes": "Popular routes",
+    "recentSearches": "Recent searches",
+    "selectDate": "Select date"
+  },
+  "steps": {
+    "search": "Search",
+    "seats": "Seats",
+    "details": "Details",
+    "review": "Review"
   },
   "flights": {
-    "results": "Available flights",
+    "results": "{count} flight found",
+    "resultsPlural": "{count} flights found",
     "nonstop": "Nonstop",
     "stop": "stop",
     "stops": "stops",
     "select": "Select",
-    "noResults": "No flights found for this route."
+    "noResults": "No flights found for this route.",
+    "noFilterResults": "No flights match your filters. Try adjusting them.",
+    "perPerson": "per person",
+    "anyStops": "Any stops",
+    "maxOneStop": "Max 1 stop",
+    "cheapest": "Cheapest",
+    "fastest": "Fastest",
+    "fewestStops": "Fewest stops"
+  },
+  "seats": {
+    "title": "Choose your seat",
+    "subtitle": "Optional — skip to continue without a seat preference.",
+    "loading": "Loading seat map…",
+    "unavailable": "Seat map unavailable for this flight.",
+    "noMap": "No seat map available for this flight.",
+    "continueWithout": "Continue without seat →",
+    "continue": "Continue →",
+    "cockpit": "Cockpit",
+    "seatsLeft": "{count} seat left",
+    "seatsLeftPlural": "{count} seats left",
+    "allSelected": "All seats selected",
+    "continueWith": "Continue with {count} seat(s) →",
+    "skip": "Skip & continue →",
+    "unavailableSeat": "unavailable",
+    "selected": "Selected",
+    "available": "Available",
+    "unavailableLabel": "Unavailable"
   },
   "booking": {
-    "seats": "Choose your seat",
     "details": "Passenger details",
-    "review": "Review booking",
-    "confirm": "Confirm booking",
-    "firstName": "First name",
-    "lastName": "Last name",
-    "email": "Email address",
-    "passport": "Passport number"
+    "review": "Review your booking",
+    "confirm": "Confirm booking →",
+    "reviewButton": "Review booking →",
+    "firstName": "First name *",
+    "lastName": "Last name *",
+    "email": "Email address *",
+    "passport": "Passport number *",
+    "flight": "Flight",
+    "passenger": "Passenger",
+    "seatSection": "Seats",
+    "seatsSelected": "{count} seat(s) selected",
+    "total": "Total",
+    "flightTotal": "Flight total",
+    "taxNote": "Includes taxes and fees",
+    "testNote": "This is a test booking. No real charges will be made.",
+    "operatedBy": "Operated by",
+    "name": "Name",
+    "emailLabel": "Email",
+    "passportLabel": "Passport",
+    "nonstop": "Nonstop",
+    "stop": "stop"
+  },
+  "confirmation": {
+    "title": "Booking confirmed",
+    "refLabel": "Booking reference",
+    "download": "↓ Download boarding pass",
+    "bookAnother": "Book another flight",
+    "pdfNote": "A PDF boarding pass will download to your device."
+  },
+  "bookings": {
+    "title": "My Bookings",
+    "empty": "You haven't booked any flights yet.",
+    "searchLink": "Search for flights →",
+    "confirmed": "Confirmed",
+    "booked": "Booked",
+    "nonstop": "Nonstop",
+    "stop": "stop",
+    "stops": "stops",
+    "cancel": "Cancel booking",
+    "cancelTitle": "Cancel this booking?",
+    "cancelNote": "This action cannot be undone. This is a test booking so no refund is needed.",
+    "keepBooking": "Keep booking",
+    "confirmCancel": "Yes, cancel"
+  },
+  "incomplete": {
+    "message": "You have an incomplete booking — {origin} → {destination} for {price}",
+    "discard": "Discard",
+    "continue": "Continue booking →"
+  },
+  "footer": {
+    "tagline": "Search and book flights worldwide. Fast, simple, no hidden fees.",
+    "company": "Company",
+    "support": "Support",
+    "legal": "Legal",
+    "about": "About us",
+    "careers": "Careers",
+    "press": "Press",
+    "blog": "Blog",
+    "helpCentre": "Help Centre",
+    "contact": "Contact Us",
+    "flightStatus": "Flight Status",
+    "baggageInfo": "Baggage Info",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "accessibility": "Accessibility",
+    "copyright": "© {year} Skyway Technologies Ltd. All rights reserved.",
+    "poweredBy": "Flights powered by"
   },
   "common": {
     "back": "Back",
     "next": "Next",
     "loading": "Loading...",
-    "error": "Something went wrong."
+    "error": "Something went wrong.",
+    "nonstop": "Nonstop",
+    "booked": "Booked"
   }
 }

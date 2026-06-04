@@ -28,7 +28,7 @@ export type BookingStore = {
   selectedOffer: DuffelOffer | null;
   setSelectedOffer: (offer: DuffelOffer) => void;
   selectedSeatIds: string[];
-  toggleSeat: (seatId: string) => void;
+  toggleSeat: (seatId: string, maxSeats?: number) => void;
   passenger: PassengerDetails | null;
   setPassenger: (details: PassengerDetails) => void;
   bookingReference: string | null;
@@ -55,12 +55,20 @@ export const useBookingStore = create<BookingStore>()(
       selectedOffer: null,
       setSelectedOffer: (offer) => set({ selectedOffer: offer }),
       selectedSeatIds: [],
-      toggleSeat: (seatId) =>
-        set((state) => ({
-          selectedSeatIds: state.selectedSeatIds.includes(seatId)
-            ? state.selectedSeatIds.filter((id) => id !== seatId)
-            : [...state.selectedSeatIds, seatId],
-        })),
+      toggleSeat: (seatId, maxSeats) =>
+      set((state) => {
+        if (state.selectedSeatIds.includes(seatId)) {
+          return {
+            selectedSeatIds: state.selectedSeatIds.filter((id) => id !== seatId),
+          };
+        }
+        if (maxSeats !== undefined && state.selectedSeatIds.length >= maxSeats) {
+          return state; // at limit, don't add
+        }
+        return {
+          selectedSeatIds: [...state.selectedSeatIds, seatId],
+        };
+      }),
       passenger: null,
       setPassenger: (details) => set({ passenger: details }),
       bookingReference: null,

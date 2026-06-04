@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { FlightFilters, type FilterState } from './FlightFilters';
 import { FlightCard } from './FlightCard';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -12,6 +13,7 @@ type Props = {
 };
 
 export function FlightResultsClient({ offers, locale }: Props) {
+  const t = useTranslations('flights');
   const [filters, setFilters] = useState<FilterState>({
     sortBy: 'price',
     maxStops: 'any',
@@ -26,31 +28,18 @@ export function FlightResultsClient({ offers, locale }: Props) {
       return true;
     })
     .sort((a, b) => {
-      if (filters.sortBy === 'price')
-        return Number(a.total_amount) - Number(b.total_amount);
-      if (filters.sortBy === 'duration')
-        return (a.slices[0]?.duration ?? '').localeCompare(b.slices[0]?.duration ?? '');
-      if (filters.sortBy === 'stops')
-        return (
-          (a.slices[0]?.segments.length ?? 1) - 1 -
-          ((b.slices[0]?.segments.length ?? 1) - 1)
-        );
+      if (filters.sortBy === 'price') return Number(a.total_amount) - Number(b.total_amount);
+      if (filters.sortBy === 'duration') return (a.slices[0]?.duration ?? '').localeCompare(b.slices[0]?.duration ?? '');
+      if (filters.sortBy === 'stops') return ((a.slices[0]?.segments.length ?? 1) - 1) - ((b.slices[0]?.segments.length ?? 1) - 1);
       return 0;
     });
 
   return (
     <div>
-      <FlightFilters
-        filters={filters}
-        onChange={setFilters}
-        totalResults={filtered.length}
-      />
+      <FlightFilters filters={filters} onChange={setFilters} totalResults={filtered.length} />
 
       {filtered.length === 0 ? (
-        <EmptyState
-          type="filtered"
-          message="No flights match your filters. Try adjusting the stops or sort options."
-        />
+        <EmptyState type="filtered" message={t('noFilterResults')} />
       ) : (
         <div className="space-y-3">
           {filtered.map((offer) => (

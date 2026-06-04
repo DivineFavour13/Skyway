@@ -1,38 +1,146 @@
 {
   "nav": {
     "search": "Rechercher des vols",
-    "bookings": "Mes réservations"
+    "bookings": "Mes réservations",
+    "currency": "Devise"
   },
   "search": {
     "title": "Où volez-vous ?",
+    "flightSearch": "Recherche de vols",
     "origin": "Départ",
     "destination": "Destination",
     "date": "Date de départ",
+    "returnDate": "Date de retour",
     "passengers": "Passagers",
-    "button": "Rechercher des vols"
+    "button": "Rechercher des vols",
+    "oneWay": "Aller simple",
+    "roundTrip": "Aller-retour",
+    "economy": "Économique",
+    "premium": "Premium",
+    "business": "Affaires",
+    "first": "Première",
+    "popularRoutes": "Destinations populaires",
+    "recentSearches": "Recherches récentes",
+    "selectDate": "Choisir une date"
+  },
+  "steps": {
+    "search": "Recherche",
+    "seats": "Sièges",
+    "details": "Détails",
+    "review": "Récapitulatif"
   },
   "flights": {
-    "results": "Vols disponibles",
+    "results": "{count} vol trouvé",
+    "resultsPlural": "{count} vols trouvés",
     "nonstop": "Direct",
     "stop": "escale",
     "stops": "escales",
     "select": "Choisir",
-    "noResults": "Aucun vol trouvé pour cet itinéraire."
+    "noResults": "Aucun vol trouvé pour cet itinéraire.",
+    "noFilterResults": "Aucun vol ne correspond à vos filtres. Essayez de les modifier.",
+    "perPerson": "par personne",
+    "anyStops": "Toutes escales",
+    "maxOneStop": "Max 1 escale",
+    "cheapest": "Moins cher",
+    "fastest": "Plus rapide",
+    "fewestStops": "Moins d'escales"
+  },
+  "seats": {
+    "title": "Choisissez votre siège",
+    "subtitle": "Optionnel — passez pour continuer sans préférence de siège.",
+    "loading": "Chargement du plan de cabine…",
+    "unavailable": "Plan de cabine indisponible pour ce vol.",
+    "noMap": "Aucun plan de cabine disponible pour ce vol.",
+    "continueWithout": "Continuer sans siège →",
+    "continue": "Continuer →",
+    "cockpit": "Cockpit",
+    "seatsLeft": "{count} siège restant",
+    "seatsLeftPlural": "{count} sièges restants",
+    "allSelected": "Tous les sièges sélectionnés",
+    "continueWith": "Continuer avec {count} siège(s) →",
+    "skip": "Passer et continuer →",
+    "unavailableSeat": "indisponible",
+    "selected": "Sélectionné",
+    "available": "Disponible",
+    "unavailableLabel": "Indisponible"
   },
   "booking": {
-    "seats": "Choisissez votre siège",
     "details": "Informations passager",
-    "review": "Récapitulatif",
-    "confirm": "Confirmer la réservation",
-    "firstName": "Prénom",
-    "lastName": "Nom",
-    "email": "Adresse e-mail",
-    "passport": "Numéro de passeport"
+    "review": "Récapitulatif de votre réservation",
+    "confirm": "Confirmer la réservation →",
+    "reviewButton": "Récapitulatif →",
+    "firstName": "Prénom *",
+    "lastName": "Nom *",
+    "email": "Adresse e-mail *",
+    "passport": "Numéro de passeport *",
+    "flight": "Vol",
+    "passenger": "Passager",
+    "seatSection": "Sièges",
+    "seatsSelected": "{count} siège(s) sélectionné(s)",
+    "total": "Total",
+    "flightTotal": "Total du vol",
+    "taxNote": "Taxes et frais inclus",
+    "testNote": "Ceci est une réservation de test. Aucun frais réel ne sera prélevé.",
+    "operatedBy": "Opéré par",
+    "name": "Nom",
+    "emailLabel": "E-mail",
+    "passportLabel": "Passeport",
+    "nonstop": "Direct",
+    "stop": "escale"
+  },
+  "confirmation": {
+    "title": "Réservation confirmée",
+    "refLabel": "Référence de réservation",
+    "download": "↓ Télécharger la carte d'embarquement",
+    "bookAnother": "Réserver un autre vol",
+    "pdfNote": "Un PDF de la carte d'embarquement sera téléchargé sur votre appareil."
+  },
+  "bookings": {
+    "title": "Mes réservations",
+    "empty": "Vous n'avez pas encore réservé de vol.",
+    "searchLink": "Rechercher des vols →",
+    "confirmed": "Confirmé",
+    "booked": "Réservé",
+    "nonstop": "Direct",
+    "stop": "escale",
+    "stops": "escales",
+    "cancel": "Annuler la réservation",
+    "cancelTitle": "Annuler cette réservation ?",
+    "cancelNote": "Cette action est irréversible. Il s'agit d'une réservation de test, aucun remboursement n'est nécessaire.",
+    "keepBooking": "Garder la réservation",
+    "confirmCancel": "Oui, annuler"
+  },
+  "incomplete": {
+    "message": "Vous avez une réservation incomplète — {origin} → {destination} pour {price}",
+    "discard": "Ignorer",
+    "continue": "Continuer la réservation →"
+  },
+  "footer": {
+    "tagline": "Recherchez et réservez des vols dans le monde entier. Rapide, simple, sans frais cachés.",
+    "company": "Entreprise",
+    "support": "Assistance",
+    "legal": "Mentions légales",
+    "about": "À propos",
+    "careers": "Carrières",
+    "press": "Presse",
+    "blog": "Blog",
+    "helpCentre": "Centre d'aide",
+    "contact": "Contactez-nous",
+    "flightStatus": "État du vol",
+    "baggageInfo": "Infos bagages",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "cookies": "Politique des cookies",
+    "accessibility": "Accessibilité",
+    "copyright": "© {year} Skyway Technologies Ltd. Tous droits réservés.",
+    "poweredBy": "Vols fournis par"
   },
   "common": {
     "back": "Retour",
     "next": "Suivant",
     "loading": "Chargement...",
-    "error": "Une erreur s'est produite."
+    "error": "Une erreur s'est produite.",
+    "nonstop": "Direct",
+    "booked": "Réservé"
   }
 }

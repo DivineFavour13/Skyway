@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { getRecentSearches, type RecentSearch } from '@/lib/recentSearches';
 import { useBookingStore } from '@/store/bookingStore';
 
@@ -10,6 +10,7 @@ export function RecentSearches() {
   const [searches, setSearches] = useState<RecentSearch[]>([]);
   const locale = useLocale();
   const router = useRouter();
+  const t = useTranslations('search');
   const setSearch = useBookingStore((s) => s.setSearch);
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export function RecentSearches() {
   return (
     <div className="mt-8">
       <p className="text-xs font-medium text-[var(--color-text-muted)] mb-3 uppercase tracking-wide">
-        Recent searches
+        {t('recentSearches')}
       </p>
       <div className="flex flex-wrap gap-2">
         {searches.map((s, i) => (

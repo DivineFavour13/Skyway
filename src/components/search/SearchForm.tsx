@@ -87,7 +87,7 @@ export function SearchForm() {
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
               )}
             >
-              {type === 'oneway' ? 'One way' : 'Round trip'}
+              {type === 'oneway' ? t('oneWay') : t('roundTrip')}
             </button>
           ))}
         </div>
@@ -95,10 +95,10 @@ export function SearchForm() {
         <div className="flex gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)] w-fit">
           {(
             [
-              { value: 'economy',         label: 'Economy' },
-              { value: 'premium_economy', label: 'Premium' },
-              { value: 'business',        label: 'Business' },
-              { value: 'first',           label: 'First' },
+              { value: 'economy',         label: t('economy') },
+              { value: 'premium_economy', label: t('premium') },
+              { value: 'business',        label: t('business') },
+              { value: 'first',           label: t('first') },
             ] as { value: CabinClass; label: string }[]
           ).map(({ value, label }) => (
             <button

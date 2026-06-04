@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { SearchForm } from '@/components/search/SearchForm';
 import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
 import { RecentSearches } from '@/components/search/RecentSearches';
 
 const POPULAR_ROUTES = [
@@ -21,7 +22,7 @@ export default function HomePage() {
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-12 sm:py-16">
         <div className="w-full max-w-3xl">
           <p className="text-xs font-semibold tracking-widest uppercase text-[var(--color-accent)] mb-4">
-            Flight Search
+            {t('flightSearch')}
           </p>
           <h1
             className="text-3xl sm:text-5xl font-bold text-[var(--color-text-primary)] mb-8 sm:mb-10 leading-tight"
@@ -36,7 +37,7 @@ export default function HomePage() {
 
           <div className="mt-8">
             <p className="text-xs font-medium text-[var(--color-text-muted)] mb-3 uppercase tracking-wide">
-              Popular routes
+              {t('popularRoutes')}
             </p>
             <div className="flex flex-wrap gap-2">
               {POPULAR_ROUTES.map((r) => (
@@ -52,6 +53,8 @@ export default function HomePage() {
           <RecentSearches />
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }

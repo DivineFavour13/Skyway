@@ -1,6 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 export type FilterState = {
   sortBy: 'price' | 'duration' | 'stops';
@@ -14,16 +15,32 @@ type Props = {
 };
 
 export function FlightFilters({ filters, onChange, totalResults }: Props) {
+  const t = useTranslations('flights');
+
+  const stopOptions = [
+    { val: 'any' as const, label: t('anyStops') },
+    { val: '0' as const,   label: t('nonstop') },
+    { val: '1' as const,   label: t('maxOneStop') },
+  ];
+
+  const sortOptions = [
+    { val: 'price' as const,    label: t('cheapest') },
+    { val: 'duration' as const, label: t('fastest') },
+    { val: 'stops' as const,    label: t('fewestStops') },
+  ];
+
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
       <p className="text-sm text-[var(--color-text-muted)]">
-        {totalResults} flight{totalResults !== 1 ? 's' : ''} found
+        {totalResults === 1
+          ? t('results', { count: totalResults })
+          : t('resultsPlural', { count: totalResults })}
       </p>
 
       <div className="flex flex-wrap gap-3">
         {/* Stops filter */}
         <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)]">
-          {(['any', '0', '1'] as const).map((val) => (
+          {stopOptions.map(({ val, label }) => (
             <button
               key={val}
               type="button"
@@ -35,26 +52,26 @@ export function FlightFilters({ filters, onChange, totalResults }: Props) {
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
               )}
             >
-              {val === 'any' ? 'Any stops' : val === '0' ? 'Nonstop' : 'Max 1 stop'}
+              {label}
             </button>
           ))}
         </div>
 
         {/* Sort */}
         <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--color-surface-raised)]">
-          {(['price', 'duration', 'stops'] as const).map((val) => (
+          {sortOptions.map(({ val, label }) => (
             <button
               key={val}
               type="button"
               onClick={() => onChange({ ...filters, sortBy: val })}
               className={cn(
-                'px-3 py-1.5 rounded-lg text-xs font-medium transition-all capitalize',
+                'px-3 py-1.5 rounded-lg text-xs font-medium transition-all',
                 filters.sortBy === val
                   ? 'bg-[var(--color-accent)] text-[var(--color-accent-text)]'
                   : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
               )}
             >
-              {val === 'price' ? 'Cheapest' : val === 'duration' ? 'Fastest' : 'Fewest stops'}
+              {label}
             </button>
           ))}
         </div>
