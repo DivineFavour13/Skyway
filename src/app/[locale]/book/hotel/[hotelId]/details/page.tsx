@@ -122,7 +122,7 @@ export default function HotelDetailsPage() {
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <RoomPrice amount={String(room.pricePerNight)} currency={room.currency} nights={nights} perNight={t('perNight')} />
+                      <RoomPrice amount={String(room.pricePerNight)} currency={selectedHotel.currency} nights={nights} perNight={t('perNight')} />
                     </div>
                   </div>
                 </button>
