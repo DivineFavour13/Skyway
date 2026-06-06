@@ -27,7 +27,7 @@ export default function HotelReviewPage() {
   const currentRoom = selectedRoom ?? selectedHotel?.roomTypes[0];
   const nights = checkin && checkout ? calculateNights(checkin, checkout) : 1;
   const totalPrice = currentRoom ? String(currentRoom.pricePerNight * nights) : '0';
-  const currency = currentRoom?.currency ?? 'USD';
+  const currency = selectedHotel?.currency ?? 'USD';
   const formattedTotal = useFormattedPrice(totalPrice, currency);
 
   useEffect(() => {
