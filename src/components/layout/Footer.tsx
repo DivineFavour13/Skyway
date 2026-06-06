@@ -14,7 +14,7 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 sm:col-span-1">
             <p className="text-xl font-bold text-[var(--color-text-primary)] mb-3" style={{ fontFamily: 'var(--font-display)' }}>
-              ✦ Skyway
+              ✦ Nextrip
             </p>
             <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">{t('tagline')}</p>
           </div>

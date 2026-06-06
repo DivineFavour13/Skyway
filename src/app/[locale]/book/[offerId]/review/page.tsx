@@ -10,7 +10,7 @@ import { useFormattedPrice } from '@/hooks/useFormattedPrice';
 import { generateBoardingPass } from '@/lib/boardingPass';
 
 function generateRef() {
-  return 'SKY-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+  return 'NXT-' + Math.random().toString(36).slice(2, 8).toUpperCase();
 }
 
 export default function ReviewPage() {
@@ -49,9 +49,16 @@ export default function ReviewPage() {
     setTimeout(() => {
       const ref = generateRef();
       setBookingReference(ref);
-      const bookings = JSON.parse(localStorage.getItem('skyway-bookings') ?? '[]') as unknown[];
-      bookings.push({ ref, offer: selectedOffer, passenger, seatIds: selectedSeatIds, bookedAt: new Date().toISOString() });
-      localStorage.setItem('skyway-bookings', JSON.stringify(bookings));
+      const bookings = JSON.parse(localStorage.getItem('nextrip-bookings') ?? '[]') as unknown[];
+      bookings.push({
+        type: 'flight',
+        ref,
+        offer: selectedOffer,
+        passenger,
+        seatIds: selectedSeatIds,
+        bookedAt: new Date().toISOString(),
+      });
+      localStorage.setItem('nextrip-bookings', JSON.stringify(bookings));
       setConfirmed(true);
       setLoading(false);
     }, 1200);
@@ -93,7 +100,7 @@ export default function ReviewPage() {
           ← {tCommon('back')}
         </button>
         <span className="text-lg font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>
-          ✦ Skyway
+          ✦ Nextrip
         </span>
         <div className="w-16" />
       </nav>

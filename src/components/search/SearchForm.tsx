@@ -157,7 +157,7 @@ export function SearchForm() {
         {tripType === 'roundtrip' && (
           <DatePicker
             id="returnDate"
-            label="Return date"
+            label={t('returnDate')}
             value={returnDate}
             onChange={setReturnDate}
             min={date || today}

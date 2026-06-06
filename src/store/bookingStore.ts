@@ -83,7 +83,7 @@ export const useBookingStore = create<BookingStore>()(
         }),
     }),
     {
-      name: 'skyway-booking',
+      name: 'nextrip-booking',
       partialize: (state) => ({
         search: state.search,
         selectedOffer: state.selectedOffer,

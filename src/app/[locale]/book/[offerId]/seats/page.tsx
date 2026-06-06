@@ -67,7 +67,7 @@ export default function SeatsPage() {
           className="text-lg font-bold text-[var(--color-text-primary)]"
           style={{ fontFamily: 'var(--font-display)' }}
         >
-          ✦ Skyway
+          ✦ Nextrip
         </span>
         <div className="w-16" />
       </nav>

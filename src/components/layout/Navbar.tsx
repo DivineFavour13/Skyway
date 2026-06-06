@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/navigation';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
@@ -16,6 +16,7 @@ type Props = {
 
 export function Navbar({ showBack, onBack, center }: Props) {
   const locale = useLocale();
+  const t = useTranslations('nav');
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -37,7 +38,7 @@ export function Navbar({ showBack, onBack, center }: Props) {
               className="text-xl font-bold tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              ✦ Skyway
+              ✦ Nextrip
             </Link>
           )}
         </div>
@@ -50,12 +51,12 @@ export function Navbar({ showBack, onBack, center }: Props) {
         )}
 
         {/* Right — desktop */}
-        <div className="hidden sm:flex items-center gap-4 w-36 justify-end">
+        <div className="hidden sm:flex items-center gap-4 w-auto justify-end">
           <Link
             href="/bookings"
             className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
           >
-            My Bookings
+            {t('bookings')}
           </Link>
           <CurrencySelector />
           <div className="flex gap-1">
@@ -97,15 +98,14 @@ export function Navbar({ showBack, onBack, center }: Props) {
             onClick={() => setMenuOpen(false)}
             className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors py-2"
           >
-            My Bookings
+            {t('bookings')}
           </Link>
-          {/* Currency selector in mobile menu */}
-            <div className="py-1">
+          <div className="py-1">
             <p className="text-xs text-[var(--color-text-muted)] mb-2 uppercase tracking-wide">
-                Currency
+              {t('currency')}
             </p>
             <CurrencySelector />
-            </div>
+          </div>
           <div className="flex gap-2 pt-1 border-t border-[var(--color-border)]">
             {routing.locales.map((l) => (
               <Link

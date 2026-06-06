@@ -60,7 +60,7 @@ export function generateBoardingPass(
   doc.setTextColor(194, 152, 60);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(13);
-  doc.text('* SKYWAY', 10, 14);
+  doc.text('* NEXTRIP', 10, 14);
 
   doc.setTextColor(120, 100, 80);
   doc.setFont('helvetica', 'normal');
@@ -180,7 +180,7 @@ export function generateBoardingPass(
   const barStartX = 150;
   const barY = 72;
   const barH = 10;
-  const chars = 'SKY' + ref.replace('SKY-', '');
+  const chars = 'SKY' + ref.replace('NXT-', '');
   let bX = barStartX;
 
   for (const char of chars) {
@@ -209,5 +209,5 @@ export function generateBoardingPass(
     H - 3
   );
 
-  doc.save(`skyway-boarding-pass-${ref}.pdf`);
+  doc.save(`nextrip-boarding-pass-${ref}.pdf`);
 }

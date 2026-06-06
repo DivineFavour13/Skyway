@@ -12,7 +12,7 @@ export type RecentSearch = {
   searchedAt: string;
 };
 
-const KEY = 'skyway-recent-searches';
+const KEY = 'nextrip-recent-searches';
 const MAX = 3;
 
 export function saveRecentSearch(search: Omit<RecentSearch, 'searchedAt'>) {

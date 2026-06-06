@@ -21,7 +21,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Skyway — Book Flights Worldwide',
+  title: 'Nextrip — Flights, Hotels, Cars & Activities',
   description: 'Search and book flights to anywhere in the world.',
 };
 
