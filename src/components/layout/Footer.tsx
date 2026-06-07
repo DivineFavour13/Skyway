@@ -20,45 +20,33 @@ export function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-wide mb-4">
-              {t('company')}
-            </p>
+            <p className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-wide mb-4">{t('company')}</p>
             <ul className="space-y-3">
               {companyLinks.map((item) => (
                 <li key={item}>
-                  <span className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-default">
-                    {item}
-                  </span>
+                  <span className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-default">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-wide mb-4">
-              {t('support')}
-            </p>
+            <p className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-wide mb-4">{t('support')}</p>
             <ul className="space-y-3">
               {supportLinks.map((item) => (
                 <li key={item}>
-                  <span className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-default">
-                    {item}
-                  </span>
+                  <span className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-default">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-wide mb-4">
-              {t('legal')}
-            </p>
+            <p className="text-xs font-semibold text-[var(--color-text-primary)] uppercase tracking-wide mb-4">{t('legal')}</p>
             <ul className="space-y-3">
               {legalLinks.map((item) => (
                 <li key={item}>
-                  <span className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-default">
-                    {item}
-                  </span>
+                  <span className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-default">{item}</span>
                 </li>
               ))}
             </ul>
@@ -66,18 +54,17 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8 border-t border-[var(--color-border)]">
-          <p className="text-xs text-[var(--color-text-muted)]">
-            {t('copyright', { year })}
-          </p>
+          <p className="text-xs text-[var(--color-text-muted)]">{t('copyright', { year })}</p>
           <div className="flex items-center gap-4">
             <p className="text-xs text-[var(--color-text-muted)]">
-              {t('poweredBy')}{' '}
-              <span className="text-[var(--color-accent)]">Duffel</span>
+              {t('poweredBy')} <span className="text-[var(--color-accent)]">Duffel</span>
             </p>
-            <div className="flex gap-3">
-              {['🇳🇬', '🇬🇧', '🇫🇷'].map((flag) => (
-                <span key={flag} className="text-base cursor-default">{flag}</span>
-              ))}
+            <div className="flex items-center gap-2 text-xs text-[var(--color-text-muted)]">
+              <span>NG</span>
+              <span>·</span>
+              <span>UK</span>
+              <span>·</span>
+              <span>FR</span>
             </div>
           </div>
         </div>

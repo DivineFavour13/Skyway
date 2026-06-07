@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { ArrowLeft, Compass } from 'lucide-react';
 import { useActivityStore } from '@/store/activityStore';
 import { Button } from '@/components/ui/Button';
 import { useFormattedPrice } from '@/hooks/useFormattedPrice';
@@ -33,21 +34,9 @@ export default function ActivityReviewPage() {
     setTimeout(() => {
       const ref = generateRef();
       setBookingReference(ref);
-
       const bookings = JSON.parse(localStorage.getItem('nextrip-bookings') ?? '[]') as unknown[];
-      bookings.push({
-        type: 'activity',
-        ref,
-        activity: selectedActivity,
-        date,
-        people,
-        guestDetails,
-        totalPrice,
-        currency,
-        bookedAt: new Date().toISOString(),
-      });
+      bookings.push({ type: 'activity', ref, activity: selectedActivity, date, people, guestDetails, totalPrice, currency, bookedAt: new Date().toISOString() });
       localStorage.setItem('nextrip-bookings', JSON.stringify(bookings));
-
       setConfirmed(true);
       setLoading(false);
     }, 1200);
@@ -57,20 +46,16 @@ export default function ActivityReviewPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="max-w-md w-full text-center space-y-6">
-          <div className="text-5xl">🎯</div>
-          <h1 className="text-3xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>
-            Booking confirmed
-          </h1>
+          <div className="h-20 w-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: 'var(--color-accent-dim)' }}>
+            <Compass size={48} style={{ color: 'var(--color-accent)' }} />
+          </div>
+          <h1 className="text-3xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>Booking confirmed</h1>
           <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 space-y-2">
             <p className="text-sm text-[var(--color-text-muted)]">Booking reference</p>
             <p className="text-2xl font-mono font-bold text-[var(--color-accent)]">{bookingReference}</p>
-            <p className="text-xs text-[var(--color-text-muted)]">
-              {guestDetails.firstName} {guestDetails.lastName} · {selectedActivity.title}
-            </p>
+            <p className="text-xs text-[var(--color-text-muted)]">{guestDetails.firstName} {guestDetails.lastName} · {selectedActivity.title}</p>
           </div>
-          <Button variant="outline" className="w-full" onClick={() => { reset(); router.push(`/${locale}`); }}>
-            Back to search
-          </Button>
+          <Button variant="outline" className="w-full" onClick={() => { reset(); router.push(`/${locale}`); }}>Back to search</Button>
         </div>
       </div>
     );
@@ -79,21 +64,22 @@ export default function ActivityReviewPage() {
   return (
     <div className="min-h-screen">
       <nav className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
-        <button onClick={() => router.back()} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors">← Back</button>
+        <button onClick={() => router.back()} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors flex items-center gap-1.5">
+          <ArrowLeft size={16} /> Back
+        </button>
         <span className="text-lg font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>✦ Nextrip</span>
         <div className="w-16" />
       </nav>
 
       <main className="max-w-xl mx-auto px-4 py-10">
-        <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mb-8" style={{ fontFamily: 'var(--font-display)' }}>
-          Review your booking
-        </h1>
+        <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mb-8" style={{ fontFamily: 'var(--font-display)' }}>Review your booking</h1>
 
         <div className="space-y-4">
           <Section title="Activity">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl shrink-0 flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${selectedActivity.colorFrom}, ${selectedActivity.colorTo})` }}>
-                <span className="text-xl">🎯</span>
+              <div className="h-12 w-12 rounded-xl shrink-0 flex items-center justify-center"
+                style={{ background: `linear-gradient(135deg, ${selectedActivity.colorFrom}, ${selectedActivity.colorTo})` }}>
+                <Compass size={24} className="text-white" />
               </div>
               <div>
                 <p className="text-sm font-bold text-[var(--color-text-primary)]">{selectedActivity.title}</p>

@@ -5,9 +5,9 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { ArrowLeft, Car, MapPin, Calendar, Clock } from 'lucide-react';
 import { useCarStore } from '@/store/carStore';
 import { Button } from '@/components/ui/Button';
-import { useFormattedPrice } from '@/hooks/useFormattedPrice';
 import { calculateRentalDays } from '@/lib/mockCars';
 
 const schema = z.object({
@@ -42,43 +42,37 @@ export default function CarDetailsPage() {
   if (!selectedCar) return null;
 
   const days = calculateRentalDays(pickupDate, returnDate);
-  const formattedPrice = selectedCar.pricePerDay;
 
   return (
     <div className="min-h-screen">
       <nav className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
-        <button onClick={() => router.back()} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors">← Back</button>
+        <button onClick={() => router.back()} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors flex items-center gap-1.5">
+          <ArrowLeft size={16} /> Back
+        </button>
         <span className="text-lg font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>✦ Nextrip</span>
         <div className="w-16" />
       </nav>
 
       <main className="max-w-xl mx-auto px-4 py-10">
-        {/* Car summary */}
         <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 mb-8">
           <div className="flex items-center gap-4">
-            <div
-              className="h-16 w-16 rounded-xl shrink-0 flex items-center justify-center"
-              style={{ background: `linear-gradient(135deg, ${selectedCar.colorFrom}, ${selectedCar.colorTo})` }}
-            >
-              <span className="text-2xl">🚗</span>
+            <div className="h-16 w-16 rounded-xl shrink-0 flex items-center justify-center"
+              style={{ background: `linear-gradient(135deg, ${selectedCar.colorFrom}, ${selectedCar.colorTo})` }}>
+              <Car size={28} className="text-white" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[var(--color-text-primary)]">
-                {selectedCar.year} {selectedCar.make} {selectedCar.model}
-              </h2>
+              <h2 className="text-base font-bold text-[var(--color-text-primary)]">{selectedCar.year} {selectedCar.make} {selectedCar.model}</h2>
               <p className="text-xs text-[var(--color-text-muted)]">{selectedCar.provider} · {selectedCar.category}</p>
-              <div className="flex gap-3 mt-1 text-xs text-[var(--color-text-secondary)]">
-                <span>📍 {pickup}</span>
-                <span>📅 {pickupDate} → {returnDate}</span>
-                <span>🌙 {days} days</span>
+              <div className="flex flex-wrap gap-3 mt-1 text-xs text-[var(--color-text-secondary)]">
+                <span className="flex items-center gap-1"><MapPin size={12} /> {pickup}</span>
+                <span className="flex items-center gap-1"><Calendar size={12} /> {pickupDate} → {returnDate}</span>
+                <span className="flex items-center gap-1"><Clock size={12} /> {days} days</span>
               </div>
             </div>
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mb-8" style={{ fontFamily: 'var(--font-display)' }}>
-          Driver details
-        </h1>
+        <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mb-8" style={{ fontFamily: 'var(--font-display)' }}>Driver details</h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div className="flex gap-4">
@@ -89,19 +83,15 @@ export default function CarDetailsPage() {
               <input {...register('lastName')} placeholder="Favour" className={inputClass(!!errors.lastName)} />
             </Field>
           </div>
-
           <Field label="Email address *" error={errors.email ? 'Enter a valid email' : undefined}>
             <input {...register('email')} type="email" placeholder="you@example.com" className={inputClass(!!errors.email)} />
           </Field>
-
           <Field label="Phone number *" error={errors.phone ? 'Enter a valid number' : undefined}>
             <input {...register('phone')} type="tel" placeholder="+234 800 000 0000" className={inputClass(!!errors.phone)} />
           </Field>
-
           <Field label="Driver's license number *" error={errors.licenseNumber ? 'Required' : undefined}>
             <input {...register('licenseNumber')} placeholder="DL-12345678" className={inputClass(!!errors.licenseNumber)} />
           </Field>
-
           <div className="pt-2">
             <Button type="submit" size="lg" className="w-full">Review booking →</Button>
           </div>

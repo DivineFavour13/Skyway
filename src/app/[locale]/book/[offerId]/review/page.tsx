@@ -3,6 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { ArrowLeft, CheckCircle, Check } from 'lucide-react';
 import { useBookingStore } from '@/store/bookingStore';
 import { Button } from '@/components/ui/Button';
 import { formatDuration, formatDateTime } from '@/lib/utils';
@@ -20,10 +21,7 @@ export default function ReviewPage() {
   const tConf = useTranslations('confirmation');
   const tSteps = useTranslations('steps');
   const tCommon = useTranslations('common');
-  const {
-    selectedOffer, passenger, selectedSeatIds,
-    bookingReference, setBookingReference, reset,
-  } = useBookingStore();
+  const { selectedOffer, passenger, selectedSeatIds, bookingReference, setBookingReference, reset } = useBookingStore();
 
   const [confirmed, setConfirmed] = useState(!!bookingReference);
   const [loading, setLoading] = useState(false);
@@ -50,14 +48,7 @@ export default function ReviewPage() {
       const ref = generateRef();
       setBookingReference(ref);
       const bookings = JSON.parse(localStorage.getItem('nextrip-bookings') ?? '[]') as unknown[];
-      bookings.push({
-        type: 'flight',
-        ref,
-        offer: selectedOffer,
-        passenger,
-        seatIds: selectedSeatIds,
-        bookedAt: new Date().toISOString(),
-      });
+      bookings.push({ type: 'flight', ref, offer: selectedOffer, passenger, seatIds: selectedSeatIds, bookedAt: new Date().toISOString() });
       localStorage.setItem('nextrip-bookings', JSON.stringify(bookings));
       setConfirmed(true);
       setLoading(false);
@@ -68,16 +59,16 @@ export default function ReviewPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="max-w-md w-full text-center space-y-6">
-          <div className="text-5xl" role="img" aria-label="Checkmark">✅</div>
+          <div className="h-20 w-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: 'oklch(0.70 0.18 145 / 0.15)' }}>
+            <CheckCircle size={48} style={{ color: 'var(--color-success)' }} />
+          </div>
           <h1 className="text-3xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>
             {tConf('title')}
           </h1>
           <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 space-y-2">
             <p className="text-sm text-[var(--color-text-muted)]">{tConf('refLabel')}</p>
             <p className="text-2xl font-mono font-bold text-[var(--color-accent)]">{bookingReference}</p>
-            <p className="text-xs text-[var(--color-text-muted)]">
-              {passenger.firstName} {passenger.lastName} · {passenger.email}
-            </p>
+            <p className="text-xs text-[var(--color-text-muted)]">{passenger.firstName} {passenger.lastName} · {passenger.email}</p>
           </div>
           <div className="space-y-3 pt-2">
             <Button size="lg" className="w-full" onClick={() => generateBoardingPass(selectedOffer, passenger, bookingReference)}>
@@ -96,18 +87,15 @@ export default function ReviewPage() {
   return (
     <div className="min-h-screen">
       <nav className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
-        <button onClick={() => router.back()} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors">
-          ← {tCommon('back')}
+        <button onClick={() => router.back()} className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors flex items-center gap-1.5">
+          <ArrowLeft size={16} /> {tCommon('back')}
         </button>
-        <span className="text-lg font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>
-          ✦ Nextrip
-        </span>
+        <span className="text-lg font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>✦ Nextrip</span>
         <div className="w-16" />
       </nav>
 
       <main className="max-w-xl mx-auto px-4 py-10">
         <StepIndicator current={4} steps={steps} />
-
         <h1 className="text-2xl font-bold text-[var(--color-text-primary)] mt-8 mb-8" style={{ fontFamily: 'var(--font-display)' }}>
           {t('review')}
         </h1>
@@ -144,9 +132,7 @@ export default function ReviewPage() {
 
           {selectedSeatIds.length > 0 && (
             <Section title={t('seatSection')}>
-              <p className="text-sm text-[var(--color-text-secondary)]">
-                {t('seatsSelected', { count: selectedSeatIds.length })}
-              </p>
+              <p className="text-sm text-[var(--color-text-secondary)]">{t('seatsSelected', { count: selectedSeatIds.length })}</p>
             </Section>
           )}
 
@@ -160,9 +146,7 @@ export default function ReviewPage() {
         </div>
 
         <div className="mt-8">
-          <Button size="lg" className="w-full" onClick={handleConfirm} loading={loading}>
-            {t('confirm')}
-          </Button>
+          <Button size="lg" className="w-full" onClick={handleConfirm} loading={loading}>{t('confirm')}</Button>
           <p className="text-xs text-[var(--color-text-muted)] text-center mt-3">{t('testNote')}</p>
         </div>
       </main>
@@ -198,18 +182,14 @@ function StepIndicator({ current, steps }: { current: number; steps: string[] })
         return (
           <div key={step} className="flex items-center gap-2">
             <div className="flex items-center gap-1.5">
-              <div
-                className="h-5 w-5 rounded-full text-xs flex items-center justify-center font-semibold"
+              <div className="h-5 w-5 rounded-full text-xs flex items-center justify-center font-semibold"
                 style={{
                   backgroundColor: active ? 'var(--color-accent)' : done ? 'var(--color-success)' : 'var(--color-surface-raised)',
                   color: active ? 'var(--color-accent-text)' : done ? 'var(--color-bg)' : 'var(--color-text-muted)',
-                }}
-              >
-                {done ? '✓' : n}
+                }}>
+                {done ? <Check size={10} /> : n}
               </div>
-              <span className="text-xs" style={{ color: active ? 'var(--color-text-primary)' : 'var(--color-text-muted)' }}>
-                {step}
-              </span>
+              <span className="text-xs" style={{ color: active ? 'var(--color-text-primary)' : 'var(--color-text-muted)' }}>{step}</span>
             </div>
             {i < steps.length - 1 && <div className="h-px w-6 bg-[var(--color-border)]" />}
           </div>

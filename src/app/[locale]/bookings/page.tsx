@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Plane, Building2, Car, Compass } from 'lucide-react';
 import { Link } from '@/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -9,10 +10,8 @@ import { formatDateTime, formatDuration } from '@/lib/utils';
 import { useFormattedPrice } from '@/hooks/useFormattedPrice';
 import type { DuffelOffer } from '@/types/duffel';
 import type { Hotel, RoomType } from '@/lib/mockHotels';
-import type { Car } from '@/lib/mockCars';
+import type { Car as CarType } from '@/lib/mockCars';
 import type { Activity } from '@/lib/mockActivities';
-
-// ── Types ────────────────────────────────────────────────
 
 type FlightBooking = {
   type: 'flight' | undefined;
@@ -41,7 +40,7 @@ type HotelBooking = {
 type CarBooking = {
   type: 'car';
   ref: string;
-  car: Car;
+  car: CarType;
   pickup: string;
   pickupDate: string;
   returnDate: string;
@@ -66,20 +65,9 @@ type ActivityBooking = {
 
 type SavedBooking = FlightBooking | HotelBooking | CarBooking | ActivityBooking;
 
-// ── Flight Card ──────────────────────────────────────────
-
-function FlightBookingCard({
-  booking,
-  onCancel,
-}: {
-  booking: FlightBooking;
-  onCancel: (ref: string) => void;
-}) {
+function FlightBookingCard({ booking, onCancel }: { booking: FlightBooking; onCancel: (ref: string) => void }) {
   const t = useTranslations('bookings');
-  const formattedPrice = useFormattedPrice(
-    booking.offer.total_amount,
-    booking.offer.total_currency
-  );
+  const formattedPrice = useFormattedPrice(booking.offer.total_amount, booking.offer.total_currency);
   const [confirming, setConfirming] = useState(false);
 
   const slice = booking.offer.slices[0];
@@ -92,16 +80,8 @@ function FlightBookingCard({
   const stops = slice.segments.length - 1;
 
   return (
-    <BookingShell
-      ref_={booking.ref}
-      bookedAt={booking.bookedAt}
-      icon="✈️"
-      label="Flight"
-      confirming={confirming}
-      setConfirming={setConfirming}
-      onCancel={() => onCancel(booking.ref)}
-      t={t}
-    >
+    <BookingShell ref_={booking.ref} bookedAt={booking.bookedAt} Icon={Plane} label="Flight"
+      confirming={confirming} setConfirming={setConfirming} onCancel={() => onCancel(booking.ref)} t={t}>
       <div className="flex items-center gap-4">
         <div>
           <p className="text-lg font-bold text-[var(--color-text-primary)] tabular-nums">{departure.time}</p>
@@ -130,26 +110,17 @@ function FlightBookingCard({
   );
 }
 
-// ── Hotel Card ───────────────────────────────────────────
-
 function HotelBookingCard({ booking, onCancel }: { booking: HotelBooking; onCancel: (ref: string) => void }) {
   const t = useTranslations('bookings');
   const formattedPrice = useFormattedPrice(booking.totalPrice, booking.currency);
   const [confirming, setConfirming] = useState(false);
 
   return (
-    <BookingShell
-      ref_={booking.ref}
-      bookedAt={booking.bookedAt}
-      icon="🏨"
-      label="Hotel"
-      confirming={confirming}
-      setConfirming={setConfirming}
-      onCancel={() => onCancel(booking.ref)}
-      t={t}
-    >
+    <BookingShell ref_={booking.ref} bookedAt={booking.bookedAt} Icon={Building2} label="Hotel"
+      confirming={confirming} setConfirming={setConfirming} onCancel={() => onCancel(booking.ref)} t={t}>
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-lg shrink-0" style={{ background: `linear-gradient(135deg, ${booking.hotel.colorFrom}, ${booking.hotel.colorTo})` }} />
+        <div className="h-10 w-10 rounded-lg shrink-0"
+          style={{ background: `linear-gradient(135deg, ${booking.hotel.colorFrom}, ${booking.hotel.colorTo})` }} />
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-primary)]">{booking.hotel.name}</p>
           <p className="text-xs text-[var(--color-text-muted)]">{booking.room.name} · {booking.checkin} → {booking.checkout}</p>
@@ -161,27 +132,18 @@ function HotelBookingCard({ booking, onCancel }: { booking: HotelBooking; onCanc
   );
 }
 
-// ── Car Card ─────────────────────────────────────────────
-
 function CarBookingCard({ booking, onCancel }: { booking: CarBooking; onCancel: (ref: string) => void }) {
   const t = useTranslations('bookings');
   const formattedPrice = useFormattedPrice(booking.totalPrice, booking.currency);
   const [confirming, setConfirming] = useState(false);
 
   return (
-    <BookingShell
-      ref_={booking.ref}
-      bookedAt={booking.bookedAt}
-      icon="🚗"
-      label="Car"
-      confirming={confirming}
-      setConfirming={setConfirming}
-      onCancel={() => onCancel(booking.ref)}
-      t={t}
-    >
+    <BookingShell ref_={booking.ref} bookedAt={booking.bookedAt} Icon={Car} label="Car"
+      confirming={confirming} setConfirming={setConfirming} onCancel={() => onCancel(booking.ref)} t={t}>
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-lg shrink-0 flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${booking.car.colorFrom}, ${booking.car.colorTo})` }}>
-          <span className="text-lg">🚗</span>
+        <div className="h-10 w-10 rounded-lg shrink-0 flex items-center justify-center"
+          style={{ background: `linear-gradient(135deg, ${booking.car.colorFrom}, ${booking.car.colorTo})` }}>
+          <Car size={18} className="text-white" />
         </div>
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-primary)]">{booking.car.year} {booking.car.make} {booking.car.model}</p>
@@ -194,27 +156,18 @@ function CarBookingCard({ booking, onCancel }: { booking: CarBooking; onCancel: 
   );
 }
 
-// ── Activity Card ────────────────────────────────────────
-
 function ActivityBookingCard({ booking, onCancel }: { booking: ActivityBooking; onCancel: (ref: string) => void }) {
   const t = useTranslations('bookings');
   const formattedPrice = useFormattedPrice(booking.totalPrice, booking.currency);
   const [confirming, setConfirming] = useState(false);
 
   return (
-    <BookingShell
-      ref_={booking.ref}
-      bookedAt={booking.bookedAt}
-      icon="🎯"
-      label="Activity"
-      confirming={confirming}
-      setConfirming={setConfirming}
-      onCancel={() => onCancel(booking.ref)}
-      t={t}
-    >
+    <BookingShell ref_={booking.ref} bookedAt={booking.bookedAt} Icon={Compass} label="Activity"
+      confirming={confirming} setConfirming={setConfirming} onCancel={() => onCancel(booking.ref)} t={t}>
       <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-lg shrink-0 flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${booking.activity.colorFrom}, ${booking.activity.colorTo})` }}>
-          <span className="text-lg">🎯</span>
+        <div className="h-10 w-10 rounded-lg shrink-0 flex items-center justify-center"
+          style={{ background: `linear-gradient(135deg, ${booking.activity.colorFrom}, ${booking.activity.colorTo})` }}>
+          <Compass size={18} className="text-white" />
         </div>
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-primary)]">{booking.activity.title}</p>
@@ -227,14 +180,12 @@ function ActivityBookingCard({ booking, onCancel }: { booking: ActivityBooking; 
   );
 }
 
-// ── Shared Shell ─────────────────────────────────────────
-
 function BookingShell({
-  ref_, bookedAt, icon, label, confirming, setConfirming, onCancel, t, children,
+  ref_, bookedAt, Icon, label, confirming, setConfirming, onCancel, t, children,
 }: {
   ref_: string;
   bookedAt: string;
-  icon: string;
+  Icon: React.ElementType;
   label: string;
   confirming: boolean;
   setConfirming: (v: boolean) => void;
@@ -246,7 +197,9 @@ function BookingShell({
     <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-5 space-y-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-lg">{icon}</span>
+          <div className="h-8 w-8 rounded-lg bg-[var(--color-surface-raised)] flex items-center justify-center shrink-0">
+            <Icon size={16} className="text-[var(--color-accent)]" />
+          </div>
           <div>
             <p className="font-mono text-sm font-bold text-[var(--color-accent)]">{ref_}</p>
             <p className="text-xs text-[var(--color-text-muted)]">
@@ -262,11 +215,8 @@ function BookingShell({
       {children}
 
       {!confirming ? (
-        <button
-          type="button"
-          onClick={() => setConfirming(true)}
-          className="w-full py-2 rounded-xl border border-[var(--color-error)] text-xs font-semibold text-[var(--color-error)] hover:bg-[var(--color-error)] hover:text-white transition-colors"
-        >
+        <button type="button" onClick={() => setConfirming(true)}
+          className="w-full py-2 rounded-xl border border-[var(--color-error)] text-xs font-semibold text-[var(--color-error)] hover:bg-[var(--color-error)] hover:text-white transition-colors">
           {t('cancel')}
         </button>
       ) : (
@@ -274,18 +224,12 @@ function BookingShell({
           <p className="text-sm text-[var(--color-text-primary)] font-medium">{t('cancelTitle')}</p>
           <p className="text-xs text-[var(--color-text-muted)]">{t('cancelNote')}</p>
           <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={() => setConfirming(false)}
-              className="flex-1 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors"
-            >
+            <button type="button" onClick={() => setConfirming(false)}
+              className="flex-1 py-2 rounded-xl border border-[var(--color-border)] text-xs font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors">
               {t('keepBooking')}
             </button>
-            <button
-              type="button"
-              onClick={onCancel}
-              className="flex-1 py-2 rounded-xl bg-[var(--color-error)] text-xs font-semibold text-white hover:opacity-90 transition-opacity"
-            >
+            <button type="button" onClick={onCancel}
+              className="flex-1 py-2 rounded-xl bg-[var(--color-error)] text-xs font-semibold text-white hover:opacity-90 transition-opacity">
               {t('confirmCancel')}
             </button>
           </div>
@@ -294,8 +238,6 @@ function BookingShell({
     </div>
   );
 }
-
-// ── Page ─────────────────────────────────────────────────
 
 export default function BookingsPage() {
   const t = useTranslations('bookings');
@@ -319,29 +261,15 @@ export default function BookingsPage() {
         <h1 className="text-3xl font-bold text-[var(--color-text-primary)] mb-8" style={{ fontFamily: 'var(--font-display)' }}>
           {t('title')}
         </h1>
-
         {bookings.length === 0 ? (
-          <EmptyState
-            type="bookings"
-            message={t('empty')}
-            action={
-              <Link href="/" className="text-sm text-[var(--color-accent)] hover:underline">
-                {t('searchLink')}
-              </Link>
-            }
-          />
+          <EmptyState type="bookings" message={t('empty')}
+            action={<Link href="/" className="text-sm text-[var(--color-accent)] hover:underline">{t('searchLink')}</Link>} />
         ) : (
           <div className="space-y-4">
             {bookings.map((booking) => {
-              if (booking.type === 'hotel') {
-                return <HotelBookingCard key={booking.ref} booking={booking} onCancel={handleCancel} />;
-              }
-              if (booking.type === 'car') {
-                return <CarBookingCard key={booking.ref} booking={booking} onCancel={handleCancel} />;
-              }
-              if (booking.type === 'activity') {
-                return <ActivityBookingCard key={booking.ref} booking={booking} onCancel={handleCancel} />;
-              }
+              if (booking.type === 'hotel') return <HotelBookingCard key={booking.ref} booking={booking} onCancel={handleCancel} />;
+              if (booking.type === 'car') return <CarBookingCard key={booking.ref} booking={booking} onCancel={handleCancel} />;
+              if (booking.type === 'activity') return <ActivityBookingCard key={booking.ref} booking={booking} onCancel={handleCancel} />;
               return <FlightBookingCard key={booking.ref} booking={booking as FlightBooking} onCancel={handleCancel} />;
             })}
           </div>
