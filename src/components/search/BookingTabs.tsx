@@ -1,6 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import { Building2, Car, Compass, Plane, type LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export type BookingTab = 'flights' | 'hotels' | 'cars' | 'activities';
@@ -10,11 +11,11 @@ type Props = {
   onChange: (tab: BookingTab) => void;
 };
 
-const TABS: { id: BookingTab; icon: string }[] = [
-  { id: 'flights',    icon: '✈' },
-  { id: 'hotels',     icon: '⌂' },
-  { id: 'cars',       icon: '⊡' },
-  { id: 'activities', icon: '◈' },
+const TABS: { id: BookingTab; Icon: LucideIcon }[] = [
+  { id: 'flights', Icon: Plane },
+  { id: 'hotels', Icon: Building2 },
+  { id: 'cars', Icon: Car },
+  { id: 'activities', Icon: Compass },
 ];
 
 export function BookingTabs({ active, onChange }: Props) {
@@ -22,7 +23,7 @@ export function BookingTabs({ active, onChange }: Props) {
 
   return (
     <div className="flex gap-1 p-1 rounded-2xl bg-[var(--color-surface-raised)] border border-[var(--color-border)] mb-6">
-      {TABS.map(({ id, icon }) => (
+      {TABS.map(({ id, Icon }) => (
         <button
           key={id}
           type="button"
@@ -34,7 +35,7 @@ export function BookingTabs({ active, onChange }: Props) {
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface)]'
           )}
         >
-          <span className="text-base">{icon}</span>
+          <Icon size={18} strokeWidth={2} aria-hidden="true" />
           <span className="hidden sm:inline">{t(id)}</span>
         </button>
       ))}
