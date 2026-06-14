@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import { HotelCard } from './HotelCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { cn } from '@/lib/utils';
-import type { Hotel } from '@/lib/mockHotels';
+import type { NormalizedHotel } from '@/types/hotel';
 
 type SortBy = 'price' | 'rating' | 'stars';
 
 type Props = {
-  hotels: Hotel[];
+  hotels: NormalizedHotel[];
   locale: string;
   checkin: string;
   checkout: string;
@@ -33,14 +33,13 @@ export function HotelResultsClient({
 
   const sorted = [...hotels].sort((a, b) => {
     if (sortBy === 'price')  return a.pricePerNight - b.pricePerNight;
-    if (sortBy === 'rating') return b.reviewScore - a.reviewScore;
+    if (sortBy === 'rating') return (b.reviewScore ?? 0) - (a.reviewScore ?? 0);
     if (sortBy === 'stars')  return b.stars - a.stars;
     return 0;
   });
 
   return (
     <div>
-      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <p className="text-sm text-[var(--color-text-muted)]">
           {hotels.length === 1

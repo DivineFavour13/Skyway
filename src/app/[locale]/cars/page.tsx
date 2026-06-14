@@ -9,15 +9,18 @@ type Props = {
   params: Promise<{ locale: string }>;
   searchParams: Promise<{
     pickup?: string;
+    dropoff?: string;
     pickupDate?: string;
+    pickupTime?: string;
     returnDate?: string;
+    returnTime?: string;
     carType?: string;
   }>;
 };
 
 export default async function CarsPage({ params, searchParams }: Props) {
   const { locale } = await params;
-  const { pickup, pickupDate, returnDate, carType } = await searchParams;
+  const { pickup, dropoff, pickupDate, pickupTime, returnDate, returnTime, carType } = await searchParams;
 
   if (!pickup || !pickupDate || !returnDate) {
     return (
@@ -34,28 +37,38 @@ export default async function CarsPage({ params, searchParams }: Props) {
   const days = calculateRentalDays(pickupDate, returnDate);
 
   const center = (
-    <span>
+    <span className="flex items-center gap-2 text-sm">
       <span className="font-semibold text-[var(--color-text-primary)]">{pickup}</span>
-      {' · '}{pickupDate} → {returnDate}
-      {' · '}{days} day{days !== 1 ? 's' : ''}
+      {dropoff && dropoff !== pickup && (
+        <>
+          <span>→</span>
+          <span className="font-semibold text-[var(--color-text-primary)]">{dropoff}</span>
+        </>
+      )}
+      <span className="text-[var(--color-text-muted)]">·</span>
+      <span className="text-[var(--color-text-muted)]">{pickupDate} {pickupTime} → {returnDate} {returnTime}</span>
+      <span className="text-[var(--color-text-muted)]">· {days} day{days !== 1 ? 's' : ''}</span>
     </span>
   );
 
   return (
     <div className="min-h-screen">
       <Navbar center={center} />
-      <main className="max-w-3xl mx-auto px-4 py-8 sm:py-10">
+      <main className="max-w-5xl mx-auto px-4 py-8 sm:py-10">
         <Suspense fallback={
-          <div className="space-y-4">
-            {Array.from({ length: 4 }).map((_, i) => <CarCardSkeleton key={i} />)}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {Array.from({ length: 6 }).map((_, i) => <CarCardSkeleton key={i} />)}
           </div>
         }>
           <CarResultsClient
             cars={cars}
             locale={locale}
             pickup={pickup}
+            dropoff={dropoff ?? pickup}
             pickupDate={pickupDate}
+            pickupTime={pickupTime ?? '10:00'}
             returnDate={returnDate}
+            returnTime={returnTime ?? '10:00'}
             days={days}
           />
         </Suspense>
