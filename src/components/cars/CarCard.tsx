@@ -33,7 +33,14 @@ export function CarCard({ car, locale, pickup, pickupDate, returnDate, days }: P
 
   function handleSelect() {
     setSelectedCar(car);
-    setSearchParams(pickup, pickupDate, returnDate);
+    setSearchParams({
+      pickup,
+      dropoff: pickup,
+      pickupDate,
+      pickupTime: '10:00',
+      returnDate,
+      returnTime: '10:00',
+    });
     router.push(`/${locale}/book/car/${car.id}/details`);
   }
 
