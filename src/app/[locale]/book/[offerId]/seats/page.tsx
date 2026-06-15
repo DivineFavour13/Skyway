@@ -267,7 +267,7 @@ function SeatButton({
       onClick={() => svcId && onToggle(svcId)}
       className="h-9 w-9 sm:h-10 sm:w-10 md:h-12 md:w-12 rounded-lg text-[10px] sm:text-xs font-bold transition-all flex items-center justify-center"
       style={{
-        backgroundColor: isSelected ? 'var(--color-accent)' : isAvailable ? 'var(--color-surface-raised)' : 'oklch(0.18 0.005 50)',
+        backgroundColor: isSelected ? 'var(--color-accent)' : isAvailable ? 'var(--color-surface-raised)' : '#2d2d2d',
         color: isSelected ? 'var(--color-accent-text)' : isAvailable ? 'var(--color-text-secondary)' : 'var(--color-text-muted)',
         cursor: !isAvailable || isAtLimit ? 'not-allowed' : 'pointer',
         opacity: !isAvailable ? 0.3 : isAtLimit ? 0.5 : 1,

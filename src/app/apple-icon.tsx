@@ -11,7 +11,7 @@ export default function AppleIcon() {
           width: 180,
           height: 180,
           borderRadius: 40,
-          background: 'oklch(0.13 0.008 50)',
+          background: '#1a1a1a',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

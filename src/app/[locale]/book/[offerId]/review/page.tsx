@@ -59,7 +59,7 @@ export default function ReviewPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="max-w-md w-full text-center space-y-6">
-          <div className="h-20 w-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: 'oklch(0.70 0.18 145 / 0.15)' }}>
+          <div className="h-20 w-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: 'rgba(74, 222, 128, 0.15)' }}>
             <CheckCircle size={48} style={{ color: 'var(--color-success)' }} />
           </div>
           <h1 className="text-3xl font-bold text-[var(--color-text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>
