@@ -21,7 +21,8 @@ export default function AppleIcon() {
           style={{
             fontSize: 110,
             color: '#c29830',
-            fontWeight: 900,
+            fontWeight: 'bold',
+            fontFamily: 'sans-serif',
             lineHeight: 1,
           }}
         >
