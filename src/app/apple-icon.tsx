@@ -17,17 +17,17 @@ export default function AppleIcon() {
           justifyContent: 'center',
         }}
       >
-        <div
-          style={{
-            fontSize: 110,
-            color: '#c29830',
-            fontWeight: 'bold',
-            fontFamily: 'sans-serif',
-            lineHeight: 1,
-          }}
+        <svg
+          width="110"
+          height="110"
+          viewBox="0 0 32 32"
+          fill="none"
         >
-          ✦
-        </div>
+          <path
+            d="M 16 4 Q 16 16 28 16 Q 16 16 16 28 Q 16 16 4 16 Q 16 16 16 4 Z"
+            fill="#c29830"
+          />
+        </svg>
       </div>
     ),
     { ...size }
