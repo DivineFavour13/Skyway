@@ -14,7 +14,7 @@ export default function SeatsPage() {
   const t = useTranslations('seats');
   const tSteps = useTranslations('steps');
   const tCommon = useTranslations('common');
-  const { selectedOffer, search, selectedSeatIds, toggleSeat } = useBookingStore();
+  const { selectedOffer, search, selectedSeatIds, toggleSeat, setSelectedSeatDesignators } = useBookingStore();
 
   const [seatMaps, setSeatMaps] = useState<SeatMap[]>([]);
   const [loading, setLoading] = useState(true);
@@ -41,6 +41,24 @@ export default function SeatsPage() {
   }, [offerId, selectedOffer, router, locale, tCommon]);
 
   function handleContinue() {
+    const designators = selectedSeatIds.map(id => {
+      for (const map of seatMaps) {
+        for (const cabin of map.cabins) {
+          for (const row of cabin.rows) {
+            for (const section of row.sections) {
+              for (const el of section.elements) {
+                if (el.type === 'seat' && el.available_services?.[0]?.id === id) {
+                  return el.designator || '';
+                }
+              }
+            }
+          }
+        }
+      }
+      return '';
+    }).filter(Boolean);
+
+    setSelectedSeatDesignators(designators);
     router.push(`/${locale}/book/${offerId}/details`);
   }
 

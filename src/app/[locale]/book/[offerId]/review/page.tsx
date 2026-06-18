@@ -21,7 +21,7 @@ export default function ReviewPage() {
   const tConf = useTranslations('confirmation');
   const tSteps = useTranslations('steps');
   const tCommon = useTranslations('common');
-  const { selectedOffer, passenger, selectedSeatIds, bookingReference, setBookingReference, reset } = useBookingStore();
+  const { selectedOffer, passengers, selectedSeatIds, selectedSeatDesignators, bookingReference, setBookingReference, reset } = useBookingStore();
 
   const [confirmed, setConfirmed] = useState(!!bookingReference);
   const [loading, setLoading] = useState(false);
@@ -32,10 +32,10 @@ export default function ReviewPage() {
   );
 
   useEffect(() => {
-    if (!selectedOffer || !passenger) router.replace(`/${locale}`);
-  }, [selectedOffer, passenger, router, locale]);
+    if (!selectedOffer || passengers.length === 0) router.replace(`/${locale}`);
+  }, [selectedOffer, passengers, router, locale]);
 
-  if (!selectedOffer || !passenger) return null;
+  if (!selectedOffer || passengers.length === 0) return null;
 
   const slice = selectedOffer.slices[0];
   const firstSeg = slice?.segments[0];
@@ -48,7 +48,16 @@ export default function ReviewPage() {
       const ref = generateRef();
       setBookingReference(ref);
       const bookings = JSON.parse(localStorage.getItem('nextrip-bookings') ?? '[]') as unknown[];
-      bookings.push({ type: 'flight', ref, offer: selectedOffer, passenger, seatIds: selectedSeatIds, bookedAt: new Date().toISOString() });
+      bookings.push({
+        type: 'flight',
+        ref,
+        offer: selectedOffer,
+        passenger: passengers[0], // legacy single passenger support
+        passengers, // multi-passenger support
+        seatIds: selectedSeatIds,
+        seatDesignators: selectedSeatDesignators,
+        bookedAt: new Date().toISOString()
+      });
       localStorage.setItem('nextrip-bookings', JSON.stringify(bookings));
       setConfirmed(true);
       setLoading(false);
@@ -56,6 +65,7 @@ export default function ReviewPage() {
   }
 
   if (confirmed && bookingReference) {
+    const primary = passengers[0];
     return (
       <div className="min-h-screen flex flex-col items-center justify-center px-4">
         <div className="max-w-md w-full text-center space-y-6">
@@ -68,10 +78,13 @@ export default function ReviewPage() {
           <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 space-y-2">
             <p className="text-sm text-[var(--color-text-muted)]">{tConf('refLabel')}</p>
             <p className="text-2xl font-mono font-bold text-[var(--color-accent)]">{bookingReference}</p>
-            <p className="text-xs text-[var(--color-text-muted)]">{passenger.firstName} {passenger.lastName} · {passenger.email}</p>
+            <p className="text-xs text-[var(--color-text-muted)]">
+              {primary.firstName} {primary.lastName} · {primary.email}
+              {passengers.length > 1 && ` (+${passengers.length - 1} traveler${passengers.length > 2 ? 's' : ''})`}
+            </p>
           </div>
           <div className="space-y-3 pt-2">
-            <Button size="lg" className="w-full" onClick={() => generateBoardingPass(selectedOffer, passenger, bookingReference)}>
+            <Button size="lg" className="w-full" onClick={() => generateBoardingPass(selectedOffer, passengers, bookingReference, selectedSeatDesignators)}>
               {tConf('download')}
             </Button>
             <Button variant="outline" className="w-full" onClick={() => { reset(); router.push(`/${locale}`); }}>
@@ -124,11 +137,16 @@ export default function ReviewPage() {
             )}
           </Section>
 
-          <Section title={t('passenger')}>
-            <Row label={t('name')} value={`${passenger.firstName} ${passenger.lastName}`} />
-            <Row label={t('emailLabel')} value={passenger.email} />
-            <Row label={t('passportLabel')} value={passenger.passport} />
-          </Section>
+          {passengers.map((p, idx) => (
+            <Section key={idx} title={`${t('passenger')} ${idx + 1} ${idx === 0 ? `(${t('primary')})` : ''}`}>
+              <Row label={t('name')} value={`${p.firstName} ${p.lastName}`} />
+              <Row label={t('emailLabel')} value={p.email} />
+              <Row label={t('passportLabel')} value={p.passport} />
+              {selectedSeatDesignators[idx] && (
+                <Row label={t('seatSection')} value={selectedSeatDesignators[idx]} />
+              )}
+            </Section>
+          ))}
 
           {selectedSeatIds.length > 0 && (
             <Section title={t('seatSection')}>

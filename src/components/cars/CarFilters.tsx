@@ -1,6 +1,5 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { cn } from '@/lib/utils';
 import type { Car } from '@/lib/mockCars';
 
@@ -18,8 +17,6 @@ type Props = {
 };
 
 export function CarFilters({ cars, filters, onChange }: Props) {
-  const t = useTranslations('carResults');
-
   const manufacturers = ['All', ...Array.from(new Set(cars.map((c) => c.make))).sort()];
   const categories = ['any', 'economy', 'compact', 'suv', 'luxury', 'van'];
   const transmissions = ['any', 'automatic', 'manual'];
@@ -105,9 +102,7 @@ export function CarFilters({ cars, filters, onChange }: Props) {
           <p className="text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wide">
             Max price / day
           </p>
-          <p className="text-xs font-bold text-[var(--color-accent)]">
-            ${filters.maxPrice}
-          </p>
+          <p className="text-xs font-bold text-[var(--color-accent)]">${filters.maxPrice}</p>
         </div>
         <input
           type="range"

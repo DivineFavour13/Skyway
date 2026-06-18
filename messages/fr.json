@@ -75,6 +75,7 @@
     "passport": "Numéro de passeport *",
     "flight": "Vol",
     "passenger": "Passager",
+    "primary": "Principal",
     "seatSection": "Sièges",
     "seatsSelected": "{count} siège(s) sélectionné(s)",
     "total": "Total",
@@ -108,7 +109,9 @@
     "cancelTitle": "Annuler cette réservation ?",
     "cancelNote": "Cette action est irréversible. Il s'agit d'une réservation de test, aucun remboursement n'est nécessaire.",
     "keepBooking": "Garder la réservation",
-    "confirmCancel": "Oui, annuler"
+    "confirmCancel": "Oui, annuler",
+    "traveler": "(+{count} voyageur)",
+    "travelerPlural": "(+{count} voyageurs)"
   },
   "incomplete": {
     "message": "Vous avez une réservation incomplète — {origin} → {destination} pour {price}",

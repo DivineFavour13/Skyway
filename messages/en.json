@@ -75,6 +75,7 @@
     "passport": "Passport number *",
     "flight": "Flight",
     "passenger": "Passenger",
+    "primary": "Primary",
     "seatSection": "Seats",
     "seatsSelected": "{count} seat(s) selected",
     "total": "Total",
@@ -108,7 +109,9 @@
     "cancelTitle": "Cancel this booking?",
     "cancelNote": "This action cannot be undone. This is a test booking so no refund is needed.",
     "keepBooking": "Keep booking",
-    "confirmCancel": "Yes, cancel"
+    "confirmCancel": "Yes, cancel",
+    "traveler": "(+{count} traveler)",
+    "travelerPlural": "(+{count} travelers)"
   },
   "incomplete": {
     "message": "You have an incomplete booking — {origin} → {destination} for {price}",

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { MapPin, ArrowRight } from 'lucide-react';
+import { MapPin } from 'lucide-react';
 import { DatePicker } from '@/components/ui/DatePicker';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
@@ -70,7 +70,6 @@ export function CarSearchForm() {
     <form onSubmit={handleSubmit} className="space-y-5">
       {/* Pickup + Dropoff */}
       <div className="space-y-3">
-        {/* Pickup */}
         <div>
           <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">
             {t('pickup')}
@@ -87,7 +86,6 @@ export function CarSearchForm() {
           </div>
         </div>
 
-        {/* Same location toggle */}
         <button
           type="button"
           onClick={() => setSameLocation((v) => !v)}
@@ -104,7 +102,6 @@ export function CarSearchForm() {
           Return to same location
         </button>
 
-        {/* Dropoff (if different) */}
         {!sameLocation && (
           <div>
             <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">
@@ -124,57 +121,36 @@ export function CarSearchForm() {
         )}
       </div>
 
-      {/* Pickup date + time */}
+      {/* Dates + times */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div className="flex gap-2">
           <div className="flex-1">
-            <DatePicker
-              id="pickupDate"
-              label={t('pickupDate')}
-              value={pickupDate}
-              onChange={setPickupDate}
-              min={today}
-            />
+            <DatePicker id="pickupDate" label={t('pickupDate')} value={pickupDate} onChange={setPickupDate} min={today} />
           </div>
           <div className="w-28 shrink-0">
-            <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">
-              Time
-            </label>
+            <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">Time</label>
             <select
               value={pickupTime}
               onChange={(e) => setPickupTime(e.target.value)}
               className="w-full h-[46px] px-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)] transition-colors"
             >
-              {TIME_OPTIONS.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
+              {TIME_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
             </select>
           </div>
         </div>
 
-        {/* Return date + time */}
         <div className="flex gap-2">
           <div className="flex-1">
-            <DatePicker
-              id="returnDate"
-              label={t('returnDate')}
-              value={returnDate}
-              onChange={setReturnDate}
-              min={pickupDate || today}
-            />
+            <DatePicker id="returnDate" label={t('returnDate')} value={returnDate} onChange={setReturnDate} min={pickupDate || today} />
           </div>
           <div className="w-28 shrink-0">
-            <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">
-              Time
-            </label>
+            <label className="block text-xs font-medium text-[var(--color-text-muted)] mb-1.5 uppercase tracking-wide">Time</label>
             <select
               value={returnTime}
               onChange={(e) => setReturnTime(e.target.value)}
               className="w-full h-[46px] px-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] text-sm text-[var(--color-text-primary)] outline-none focus:border-[var(--color-accent)] transition-colors"
             >
-              {TIME_OPTIONS.map((t) => (
-                <option key={t} value={t}>{t}</option>
-              ))}
+              {TIME_OPTIONS.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
             </select>
           </div>
         </div>

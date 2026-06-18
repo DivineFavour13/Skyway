@@ -9,11 +9,15 @@ import { useTranslations } from 'next-intl';
 import { useBookingStore } from '@/store/bookingStore';
 import { Button } from '@/components/ui/Button';
 
-const schema = z.object({
+const passengerSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email(),
   passport: z.string().min(5),
+});
+
+const schema = z.object({
+  passengers: z.array(passengerSchema),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -24,11 +28,15 @@ export default function DetailsPage() {
   const t = useTranslations('booking');
   const tSteps = useTranslations('steps');
   const tCommon = useTranslations('common');
-  const { selectedOffer, passenger, setPassenger } = useBookingStore();
+  const { selectedOffer, search, passengers, setPassengers } = useBookingStore();
 
   useEffect(() => {
     if (!selectedOffer) router.replace(`/${locale}`);
   }, [selectedOffer, router, locale]);
+
+  const defaultPassengers = Array.from({ length: search.adults }, (_, i) => {
+    return passengers[i] || { firstName: '', lastName: '', email: '', passport: '' };
+  });
 
   const {
     register,
@@ -36,11 +44,13 @@ export default function DetailsPage() {
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(schema),
-    defaultValues: passenger ?? {},
+    defaultValues: {
+      passengers: defaultPassengers,
+    },
   });
 
   function onSubmit(data: FormData) {
-    setPassenger(data);
+    setPassengers(data.passengers);
     router.push(`/${locale}/book/${offerId}/review`);
   }
 
@@ -73,23 +83,74 @@ export default function DetailsPage() {
           {t('details')}
         </h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <div className="flex gap-4">
-            <Field label={t('firstName')} error={errors.firstName ? t('firstName').replace(' *', '') + ' is required' : undefined}>
-              <input {...register('firstName')} placeholder="Divine" className={inputClass(!!errors.firstName)} />
-            </Field>
-            <Field label={t('lastName')} error={errors.lastName ? t('lastName').replace(' *', '') + ' is required' : undefined}>
-              <input {...register('lastName')} placeholder="Favour" className={inputClass(!!errors.lastName)} />
-            </Field>
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {Array.from({ length: search.adults }).map((_, index) => {
+            const passengerErrors = errors.passengers?.[index];
+            return (
+              <div
+                key={index}
+                className="p-6 border border-[var(--color-border)] rounded-2xl bg-[var(--color-surface)] space-y-4"
+              >
+                <h3 className="text-sm font-bold text-[var(--color-text-primary)] uppercase tracking-wide">
+                  {t('passenger')} {index + 1} {index === 0 && `(${t('primary')})`}
+                </h3>
 
-          <Field label={t('email')} error={errors.email ? 'Enter a valid email' : undefined}>
-            <input {...register('email')} type="email" placeholder="you@example.com" className={inputClass(!!errors.email)} />
-          </Field>
+                <div className="flex gap-4 flex-col sm:flex-row">
+                  <Field
+                    label={t('firstName')}
+                    error={
+                      passengerErrors?.firstName
+                        ? t('firstName').replace(' *', '') + ' is required'
+                        : undefined
+                    }
+                  >
+                    <input
+                      {...register(`passengers.${index}.firstName`)}
+                      placeholder="Divine"
+                      className={inputClass(!!passengerErrors?.firstName)}
+                    />
+                  </Field>
+                  <Field
+                    label={t('lastName')}
+                    error={
+                      passengerErrors?.lastName
+                        ? t('lastName').replace(' *', '') + ' is required'
+                        : undefined
+                    }
+                  >
+                    <input
+                      {...register(`passengers.${index}.lastName`)}
+                      placeholder="Favour"
+                      className={inputClass(!!passengerErrors?.lastName)}
+                    />
+                  </Field>
+                </div>
 
-          <Field label={t('passport')} error={errors.passport ? 'Enter a valid passport number' : undefined}>
-            <input {...register('passport')} placeholder="A12345678" className={inputClass(!!errors.passport)} />
-          </Field>
+                <Field
+                  label={t('email')}
+                  error={passengerErrors?.email ? 'Enter a valid email' : undefined}
+                >
+                  <input
+                    {...register(`passengers.${index}.email`)}
+                    type="email"
+                    placeholder="you@example.com"
+                    className={inputClass(!!passengerErrors?.email)}
+                  />
+                </Field>
+
+                <Field
+                  label={t('passport')}
+                  error={passengerErrors?.passport ? 'Enter a valid passport number' : undefined}
+                >
+                  <input
+                    {...register(`passengers.${index}.passport`)}
+                    placeholder="A12345678"
+                    className={inputClass(!!passengerErrors?.passport)}
+                  />
+                </Field>
+              </div>
+            );
+          })}
 
           <div className="pt-2">
             <Button type="submit" size="lg" className="w-full">

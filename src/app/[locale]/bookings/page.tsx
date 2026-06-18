@@ -18,6 +18,7 @@ type FlightBooking = {
   ref: string;
   offer: DuffelOffer;
   passenger: { firstName: string; lastName: string; email: string; passport: string };
+  passengers?: { firstName: string; lastName: string; email: string; passport: string }[];
   seatIds: string[];
   bookedAt: string;
 };
@@ -103,7 +104,17 @@ function FlightBookingCard({ booking, onCancel }: { booking: FlightBooking; onCa
         </div>
       </div>
       <div className="flex items-center justify-between pt-2 border-t border-[var(--color-border)]">
-        <p className="text-xs text-[var(--color-text-muted)]">{booking.passenger.firstName} {booking.passenger.lastName}</p>
+        <p className="text-xs text-[var(--color-text-muted)]">
+          {booking.passengers && booking.passengers.length > 0
+            ? `${booking.passengers[0].firstName} ${booking.passengers[0].lastName} ${
+                booking.passengers.length > 1
+                  ? booking.passengers.length - 1 === 1
+                    ? t('traveler', { count: booking.passengers.length - 1 })
+                    : t('travelerPlural', { count: booking.passengers.length - 1 })
+                  : ''
+              }`
+            : `${booking.passenger.firstName} ${booking.passenger.lastName}`}
+        </p>
         <p className="text-sm font-bold text-[var(--color-text-primary)]">{formattedPrice}</p>
       </div>
     </BookingShell>

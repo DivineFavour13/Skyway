@@ -31,6 +31,10 @@ export type BookingStore = {
   toggleSeat: (seatId: string, maxSeats?: number) => void;
   passenger: PassengerDetails | null;
   setPassenger: (details: PassengerDetails) => void;
+  passengers: PassengerDetails[];
+  setPassengers: (detailsList: PassengerDetails[]) => void;
+  selectedSeatDesignators: string[];
+  setSelectedSeatDesignators: (designators: string[]) => void;
   bookingReference: string | null;
   setBookingReference: (ref: string) => void;
   reset: () => void;
@@ -71,6 +75,10 @@ export const useBookingStore = create<BookingStore>()(
       }),
       passenger: null,
       setPassenger: (details) => set({ passenger: details }),
+      passengers: [],
+      setPassengers: (detailsList) => set({ passengers: detailsList, passenger: detailsList[0] || null }),
+      selectedSeatDesignators: [],
+      setSelectedSeatDesignators: (designators) => set({ selectedSeatDesignators: designators }),
       bookingReference: null,
       setBookingReference: (ref) => set({ bookingReference: ref }),
       reset: () =>
@@ -79,6 +87,8 @@ export const useBookingStore = create<BookingStore>()(
           selectedOffer: null,
           selectedSeatIds: [],
           passenger: null,
+          passengers: [],
+          selectedSeatDesignators: [],
           bookingReference: null,
         }),
     }),
@@ -88,6 +98,8 @@ export const useBookingStore = create<BookingStore>()(
         search: state.search,
         selectedOffer: state.selectedOffer,
         passenger: state.passenger,
+        passengers: state.passengers,
+        selectedSeatDesignators: state.selectedSeatDesignators,
         bookingReference: state.bookingReference,
       }),
     }
