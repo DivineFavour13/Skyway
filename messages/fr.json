@@ -98,8 +98,8 @@
   },
   "bookings": {
     "title": "Mes réservations",
-    "empty": "Vous n'avez pas encore réservé de vol.",
-    "searchLink": "Rechercher des vols →",
+    "empty": "Vous n'avez pas encore de réservations.",
+    "searchLink": "Commencer une recherche →",
     "confirmed": "Confirmé",
     "booked": "Réservé",
     "nonstop": "Direct",
@@ -111,7 +111,13 @@
     "keepBooking": "Garder la réservation",
     "confirmCancel": "Oui, annuler",
     "traveler": "(+{count} voyageur)",
-    "travelerPlural": "(+{count} voyageurs)"
+    "travelerPlural": "(+{count} voyageurs)",
+    "day": "jour",
+    "days": "jours",
+    "night": "nuit",
+    "nights": "nuits",
+    "guests": "voyageurs",
+    "people": "personnes"
   },
   "incomplete": {
     "message": "Vous avez une réservation incomplète — {origin} → {destination} pour {price}",
@@ -119,7 +125,7 @@
     "continue": "Continuer la réservation →"
   },
   "footer": {
-    "tagline": "Recherchez et réservez des vols dans le monde entier. Rapide, simple, sans frais cachés.",
+    "tagline": "Recherchez et réservez des vols, hôtels, voitures et activités dans le monde entier. Rapide, simple, sans frais cachés.",
     "company": "Entreprise",
     "support": "Assistance",
     "legal": "Mentions légales",
@@ -147,10 +153,10 @@
     "booked": "Réservé"
   },
   "tabs": {
-  "flights": "Vols",
-  "hotels": "Hôtels",
-  "cars": "Voitures",
-  "activities": "Activités"
+    "flights": "Vols",
+    "hotels": "Hôtels",
+    "cars": "Voitures",
+    "activities": "Activités"
   },
   "home": {
     "travelSearch": "Recherche de voyage",
@@ -201,17 +207,17 @@
     "title": "Que voulez-vous faire ?"
   },
   "hotelResults": {
-  "found": "{count} hôtel trouvé",
-  "foundPlural": "{count} hôtels trouvés",
-  "noResults": "Aucun hôtel trouvé à {city}.",
-  "perNight": "par nuit",
-  "select": "Choisir une chambre",
-  "stars": "étoiles",
-  "reviews": "avis",
-  "priceLow": "Prix",
-  "rating": "Note",
-  "night": "nuit",
-  "nights": "nuits"
+    "found": "{count} hôtel trouvé",
+    "foundPlural": "{count} hôtels trouvés",
+    "noResults": "Aucun hôtel trouvé à {city}.",
+    "perNight": "par nuit",
+    "select": "Choisir une chambre",
+    "stars": "étoiles",
+    "reviews": "avis",
+    "priceLow": "Prix",
+    "rating": "Note",
+    "night": "nuit",
+    "nights": "nuits"
   },
   "hotelBooking": {
     "title": "Informations voyageur",
@@ -247,15 +253,15 @@
     "testNote": "Ceci est une réservation de test. Aucun frais réel ne sera prélevé."
   },
   "carResults": {
-  "found": "{count} voiture trouvée",
-  "foundPlural": "{count} voitures trouvées",
-  "noResults": "Aucune voiture disponible à {city}.",
-  "perDay": "par jour",
-  "day": "jour",
-  "days": "jours",
-  "select": "Choisir",
-  "priceLow": "Prix",
-  "mostSeats": "Plus de places"
+    "found": "{count} voiture trouvée",
+    "foundPlural": "{count} voitures trouvées",
+    "noResults": "Aucune voiture disponible à {city}.",
+    "perDay": "par jour",
+    "day": "jour",
+    "days": "jours",
+    "select": "Choisir",
+    "priceLow": "Prix",
+    "mostSeats": "Plus de places"
   },
   "activityResults": {
     "found": "{count} activité trouvée",

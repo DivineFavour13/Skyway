@@ -135,7 +135,9 @@ function HotelBookingCard({ booking, onCancel }: { booking: HotelBooking; onCanc
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-primary)]">{booking.hotel.name}</p>
           <p className="text-xs text-[var(--color-text-muted)]">{booking.room.name} · {booking.checkin} → {booking.checkout}</p>
-          <p className="text-xs text-[var(--color-text-muted)]">{booking.nights} nights · {booking.guests} guests</p>
+          <p className="text-xs text-[var(--color-text-muted)]">
+            {booking.nights} {booking.nights === 1 ? t('night') : t('nights')} · {booking.guests} {t('guests')}
+          </p>
         </div>
         <p className="text-sm font-bold text-[var(--color-text-primary)]">{formattedPrice}</p>
       </div>
@@ -159,7 +161,9 @@ function CarBookingCard({ booking, onCancel }: { booking: CarBooking; onCancel: 
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-primary)]">{booking.car.year} {booking.car.make} {booking.car.model}</p>
           <p className="text-xs text-[var(--color-text-muted)]">{booking.pickup} · {booking.pickupDate} → {booking.returnDate}</p>
-          <p className="text-xs text-[var(--color-text-muted)]">{booking.days} days · {booking.car.provider}</p>
+          <p className="text-xs text-[var(--color-text-muted)]">
+            {booking.days} {booking.days === 1 ? t('day') : t('days')} · {booking.car.provider}
+          </p>
         </div>
         <p className="text-sm font-bold text-[var(--color-text-primary)]">{formattedPrice}</p>
       </div>
@@ -183,7 +187,9 @@ function ActivityBookingCard({ booking, onCancel }: { booking: ActivityBooking; 
         <div className="flex-1">
           <p className="text-sm font-bold text-[var(--color-text-primary)]">{booking.activity.title}</p>
           <p className="text-xs text-[var(--color-text-muted)]">{booking.activity.city} · {booking.date}</p>
-          <p className="text-xs text-[var(--color-text-muted)]">{booking.people} people · {booking.activity.duration}</p>
+          <p className="text-xs text-[var(--color-text-muted)]">
+            {booking.people} {t('people')} · {booking.activity.duration}
+          </p>
         </div>
         <p className="text-sm font-bold text-[var(--color-text-primary)]">{formattedPrice}</p>
       </div>

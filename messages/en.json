@@ -98,8 +98,8 @@
   },
   "bookings": {
     "title": "My Bookings",
-    "empty": "You haven't booked any flights yet.",
-    "searchLink": "Search for flights →",
+    "empty": "You haven't made any bookings yet.",
+    "searchLink": "Start searching →",
     "confirmed": "Confirmed",
     "booked": "Booked",
     "nonstop": "Nonstop",
@@ -111,7 +111,13 @@
     "keepBooking": "Keep booking",
     "confirmCancel": "Yes, cancel",
     "traveler": "(+{count} traveler)",
-    "travelerPlural": "(+{count} travelers)"
+    "travelerPlural": "(+{count} travelers)",
+    "day": "day",
+    "days": "days",
+    "night": "night",
+    "nights": "nights",
+    "guests": "guests",
+    "people": "people"
   },
   "incomplete": {
     "message": "You have an incomplete booking — {origin} → {destination} for {price}",
@@ -147,11 +153,11 @@
     "booked": "Booked"
   },
   "tabs": {
-  "flights": "Flights",
-  "hotels": "Hotels",
-  "cars": "Cars",
-  "activities": "Activities"
-},
+    "flights": "Flights",
+    "hotels": "Hotels",
+    "cars": "Cars",
+    "activities": "Activities"
+  },
   "home": {
     "travelSearch": "Travel Search",
     "flightsTitle": "Where are you flying?",
@@ -201,17 +207,17 @@
     "title": "What do you want to do?"
   },
   "hotelResults": {
-  "found": "{count} hotel found",
-  "foundPlural": "{count} hotels found",
-  "noResults": "No hotels found in {city}.",
-  "perNight": "per night",
-  "select": "Select room",
-  "stars": "stars",
-  "reviews": "reviews",
-  "priceLow": "Price",
-  "rating": "Rating",
-  "night": "night",
-  "nights": "nights"
+    "found": "{count} hotel found",
+    "foundPlural": "{count} hotels found",
+    "noResults": "No hotels found in {city}.",
+    "perNight": "per night",
+    "select": "Select room",
+    "stars": "stars",
+    "reviews": "reviews",
+    "priceLow": "Price",
+    "rating": "Rating",
+    "night": "night",
+    "nights": "nights"
   },
   "hotelBooking": {
     "title": "Guest details",
@@ -247,15 +253,15 @@
     "testNote": "This is a test booking. No real charges will be made."
   },
   "carResults": {
-  "found": "{count} car found",
-  "foundPlural": "{count} cars found",
-  "noResults": "No cars available in {city}.",
-  "perDay": "per day",
-  "day": "day",
-  "days": "days",
-  "select": "Select",
-  "priceLow": "Price",
-  "mostSeats": "Most seats"
+    "found": "{count} car found",
+    "foundPlural": "{count} cars found",
+    "noResults": "No cars available in {city}.",
+    "perDay": "per day",
+    "day": "day",
+    "days": "days",
+    "select": "Select",
+    "priceLow": "Price",
+    "mostSeats": "Most seats"
   },
   "activityResults": {
     "found": "{count} activity found",
